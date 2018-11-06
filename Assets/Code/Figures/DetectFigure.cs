@@ -12,7 +12,7 @@ public class DetectFigure : MonoBehaviour
     public Text loopStateText;
     public Text AngleText;
 
-    private static float inclinMinY = 0;
+    //private static float inclinMinY = 0;
 
     private Vector3 updateAngleValueEuler;
     private Quaternion updateAngleValueQuaternion;
@@ -73,7 +73,7 @@ public class DetectFigure : MonoBehaviour
         countDownUIfigure = SetcountDownUIfigure;
 
 
-        AccelerometerInputButton AccelerometerInputButton = GetComponent<AccelerometerInputButton>();
+        //AccelerometerInputButton AccelerometerInputButton = GetComponent<AccelerometerInputButton>();
     }
 
 
@@ -81,7 +81,7 @@ public class DetectFigure : MonoBehaviour
     {
         updateAngleValueEuler = transform.localEulerAngles;
         updateAngleValueQuaternion = transform.rotation;
-        inclinMinY = AccelerometerInputButton.inclinMinY;
+       // inclinMinY = AccelerometerInputButton.inclinMinY;
 
         loopStateText.text = "Step = " + stepInvertedLoop.ToString();
 
@@ -302,7 +302,7 @@ public class DetectFigure : MonoBehaviour
         onLoop = true;
 
 
-        if (Input.acceleration.y - inclinMinY > 0.2 || Input.acceleration.x > 0.2 || Input.acceleration.x < -0.2)
+        if (Input.acceleration.y /*- inclinMinY */> 0.2 || Input.acceleration.x > 0.2 || Input.acceleration.x < -0.2)
         {
             stepLoop = 0;
             enterLoop = false;
