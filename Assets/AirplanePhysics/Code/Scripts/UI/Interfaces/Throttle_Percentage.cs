@@ -15,13 +15,14 @@ namespace WeLoveAero
         void Start()
         {
             percentageText = GetComponent<Text> ();
+         
         }
 
-        public void textUpdate (float value)
+        public void textUpdate (float Value)
         {
-            percentageText.text = Mathf.Round(value * 100) + " %";
+            percentageText.text = Mathf.Round(Value * 100) + " %";
            
-          
+
         }
     }
 }

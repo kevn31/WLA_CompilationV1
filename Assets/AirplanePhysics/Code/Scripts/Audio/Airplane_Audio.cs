@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FakePhysics;
 
 namespace WeLoveAero
 {
@@ -8,7 +9,7 @@ namespace WeLoveAero
     {
         #region Variables
         [Header("Airplane Audio Properties")]
-        public BaseAirplane_Input  input;
+        public Hub_Input input;
         public AudioSource idleSource;
         public AudioSource fullThrottleSource;
         public float maxPitchValue = 1.2f;
@@ -45,8 +46,8 @@ namespace WeLoveAero
         #region Custom Methods
         protected virtual void HandleAudio()
         {
-            finalVolumeValue = Mathf.Lerp(0f, 1f, input.StickyThrottle);
-            finalPitchValue = Mathf.Lerp(1f, maxPitchValue, input.StickyThrottle);
+            finalVolumeValue = Mathf.Lerp(0f, 1f, input.f_StickyThrottle);
+            finalPitchValue = Mathf.Lerp(1f, maxPitchValue, input.f_StickyThrottle);
 
             if(fullThrottleSource)
             {
