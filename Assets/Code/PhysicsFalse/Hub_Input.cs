@@ -14,8 +14,9 @@ namespace FakePhysics
         [SerializeField]
         private bool rollUnactive, throttleUnactive;
         [SerializeField]
-        private float f_StickyThrottleValor, f_maxSpeed;
-        private float f_xSpeed;
+        private float f_StickyThrottleValor;
+        public float f_maxSpeed;
+        public float f_xSpeed;
         public float reactivity;
         private Vector3 pastRotationForTheYaw;
         private Vector3 pastRotationForTheRoll;
@@ -28,7 +29,7 @@ namespace FakePhysics
         protected float f_throttle = 0f;
         public float f_throttleSpeed, f_pitchSpeed = 0.5f;
 
-        private float f_speed = 0f;
+        protected float f_speed = 0f;
 
         public Slider ValeurSlider;
 
@@ -41,7 +42,7 @@ namespace FakePhysics
         private float canTurn = 0;
         [SerializeField]
         private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle;
-        private float accerlerationX, accerlerationY, buttonLeft, buttonRight, pastRotationRollZ, pastRotationRollY;
+        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, reactivityNow, turnMultiplicao;
         #endregion
 
 
@@ -49,7 +50,7 @@ namespace FakePhysics
         // Use this for initialization
         void Start()
         {
-            
+            f_rollTurn = 0.75f;
         }
 
         // Update is called once per frame
@@ -62,7 +63,6 @@ namespace FakePhysics
             setPitch();
             setYaw();
             setRoll();
-            setRollTurn();
             ClampInputs();
 
             transform.Translate(Vector3.forward*Time.deltaTime * f_speed);
@@ -250,20 +250,23 @@ namespace FakePhysics
         {
             pastRotationForTheRoll = transform.eulerAngles;
 
-            Debug.Log(pastRotationRollZ);
-            if (buttonRight != 0)
+            //Debug.Log(pastRotationRollZ);
+            if (f_rollTurn != 0)
                 {
                     if (pastRotationRollZ > 315 || pastRotationRollZ < 180)
                     {
-                        pastRotationRollZ = pastRotationForTheRoll.z + ((buttonRight * Time.deltaTime) * 50);
+                        pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
+                        pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * reactivity);
                     }
                 }
 
-                if(buttonLeft != 0)
+                if(f_rollTurn != 0)
                 {
                     if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
                     {
-                        pastRotationRollZ = pastRotationForTheRoll.z + ((buttonLeft * Time.deltaTime) * 50);
+                        pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
+                        pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * reactivity);
+                    
                     }
                 }
                 
@@ -277,15 +280,36 @@ namespace FakePhysics
 
         public void buttonOnClick(bool isRight)
         {
-            
+
+            pastRotationForTheRoll = transform.eulerAngles;
+
             if (isRight)
             {
-                buttonRight = -0.75f;
+                if (pastRotationRollZ > 315|| pastRotationRollZ < 180)
+                {
+                    reactivityNow = 50;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                }
+                else if(pastRotationRollZ > 300 || pastRotationRollZ < 180)
+                {
+                    reactivityNow--;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
+                }
+       
+
             }
             else
             {
-                buttonLeft = 0.75f;
+
+                if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
+                {
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) *100);
+                }
             }
+
+            transform.rotation = Quaternion.Euler(pastRotationForTheRoll.x, pastRotationRollY, pastRotationRollZ);
         }
 
 
@@ -293,11 +317,11 @@ namespace FakePhysics
         {
             if (isRight)
             {
-                buttonRight = 0;
+                f_rollTurn = 0;
             }
             else
             {
-                buttonLeft = 0;
+                f_rollTurn = 0;
             }
         }
 
