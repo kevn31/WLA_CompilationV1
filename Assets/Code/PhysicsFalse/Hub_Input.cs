@@ -17,8 +17,8 @@ namespace FakePhysics
         private float f_StickyThrottleValor, f_maxSpeed;
         private float f_xSpeed;
         public float reactivity;
-        public Vector3 pastRotationForTheYaw;
-        public Vector3 pastRotationForTheRoll;
+        private Vector3 pastRotationForTheYaw;
+        private Vector3 pastRotationForTheRoll;
 
         protected float f_pitch = 0f;
         protected float f_actualPitch = 0f;
@@ -40,13 +40,14 @@ namespace FakePhysics
 
         private float canTurn = 0;
         [SerializeField]
-        private float maxTurn;
+        private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle;
+        private float accerlerationX, accerlerationY, buttonLeft, buttonRight, pastRotationRollZ, pastRotationRollY;
         #endregion
 
 
 
-       // Use this for initialization
-       void Start()
+        // Use this for initialization
+        void Start()
         {
             
         }
@@ -54,14 +55,15 @@ namespace FakePhysics
         // Update is called once per frame
         void Update()
         {
+            setGyroAngleMax();
             StickyThrottleControl();
             HandleInput();
             setSpeed();
             setPitch();
             setYaw();
             setRoll();
+            setRollTurn();
             ClampInputs();
-
 
             transform.Translate(Vector3.forward*Time.deltaTime * f_speed);
         }
@@ -71,22 +73,42 @@ namespace FakePhysics
         {
             f_stickyThrottle = f_stickyThrottle + (-f_throttle * f_throttleSpeed * Time.deltaTime);
 
-            //f_stickyThrottle = ValeurSlider.value;
+            f_stickyThrottle = ValeurSlider.value;
 
-            ValeurSlider.value = f_stickyThrottle;
+            //ValeurSlider.value = f_stickyThrottle;
         }
 
         protected virtual void HandleInput()
         {
             //Process Main Control Input
 
-            f_pitch = Input.GetAxis("Pitch_manette");
+            //f_pitch = Input.GetAxis("Pitch_manette");
 
 
-            
+            if (Input.acceleration.y<0.02 && Input.acceleration.y > -0.02)
+            {
+                accerlerationY = 0;
+            }
+            else
+            {
+                f_pitch = accerlerationY * reactivity_Pitch;
+            }
+
+
+
+
             if (!rollUnactive)
             {
-                f_roll = Input.GetAxis("Roll_manette");
+                //f_roll = Input.GetAxis("Roll_manette");
+                if (Input.acceleration.x < 0.05 && Input.acceleration.x > -0.05)
+                {
+                    accerlerationX = 0;
+                }
+                else
+                {
+                    f_roll = -accerlerationX * reactivity_Roll;
+                    //Debug.Log(f_roll);
+                }
             }
 
            
@@ -127,8 +149,9 @@ namespace FakePhysics
             f_throttle = Mathf.Clamp(f_throttle, -1f, 1f);
             f_stickyThrottle = Mathf.Clamp(f_stickyThrottle, 0f, 1f);
             f_speed = Mathf.Clamp(f_speed, 0f, f_maxSpeed);
+          //  accerlerationX = Mathf.Clamp(accerlerationX, -1f, 1f);
+           // accerlerationY = Mathf.Clamp(accerlerationY, -1f, 1f);
         }
-
 
 
         protected void setSpeed()
@@ -170,7 +193,7 @@ namespace FakePhysics
            
             
 
-            transform.Rotate((f_actualPitch * Time.deltaTime)*reactivity, 0, 0, Space.Self);
+            transform.Rotate((f_pitch * Time.deltaTime)*reactivity, 0, 0, Space.Self);
         }
 
 
@@ -206,6 +229,78 @@ namespace FakePhysics
             transform.rotation = Quaternion.Euler(pastRotationForTheRoll.x, pastRotationForTheRoll.y, pastRotationRoll);
         }
 
-       
+        protected void setGyroAngleMax()
+        {
+            // maxInclinationAngle, accerlerationX, accerlerationY;
+
+            if (Input.acceleration.x > -maxInclinationAngle && Input.acceleration.x < maxInclinationAngle)
+            {
+                accerlerationX = Input.acceleration.x / maxInclinationAngle; 
+            }
+
+            if (Input.acceleration.y > -maxInclinationAngle && Input.acceleration.y < maxInclinationAngle)
+            {
+                accerlerationY = Input.acceleration.y / maxInclinationAngle;
+            }
+
+
+        }
+
+        protected void setRollTurn()
+        {
+            pastRotationForTheRoll = transform.eulerAngles;
+
+            Debug.Log(pastRotationRollZ);
+            if (buttonRight != 0)
+                {
+                    if (pastRotationRollZ > 315 || pastRotationRollZ < 180)
+                    {
+                        pastRotationRollZ = pastRotationForTheRoll.z + ((buttonRight * Time.deltaTime) * 50);
+                    }
+                }
+
+                if(buttonLeft != 0)
+                {
+                    if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
+                    {
+                        pastRotationRollZ = pastRotationForTheRoll.z + ((buttonLeft * Time.deltaTime) * 50);
+                    }
+                }
+                
+            pastRotationRollY = pastRotationForTheRoll.y + ((f_roll * Time.deltaTime) * reactivity);
+
+
+            transform.rotation = Quaternion.Euler(pastRotationForTheRoll.x, pastRotationRollY, pastRotationRollZ);
+        }
+
+
+
+        public void buttonOnClick(bool isRight)
+        {
+            
+            if (isRight)
+            {
+                buttonRight = -0.75f;
+            }
+            else
+            {
+                buttonLeft = 0.75f;
+            }
+        }
+
+
+        public void buttonNotOnClick(bool isRight)
+        {
+            if (isRight)
+            {
+                buttonRight = 0;
+            }
+            else
+            {
+                buttonLeft = 0;
+            }
+        }
+
+
     }
 }
