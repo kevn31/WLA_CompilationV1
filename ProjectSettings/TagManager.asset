@@ -8,6 +8,12 @@ TagManager:
   - TextGuest
   - Cadenas
   - CadenasStages
+  - onGoingFigure
+  - small
+  - limiteFigure
+  - large
+  - medium
+  - planeGeneratorFigure
   layers:
   - Default
   - TransparentFX
