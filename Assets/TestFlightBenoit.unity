@@ -1863,16 +1863,18 @@ MonoBehaviour:
   rollUnactive: 0
   throttleUnactive: 0
   f_StickyThrottleValor: 0
-  f_maxSpeed: 200
   f_xSpeed: 0
+  f_maxSpeed: 200
   reactivity: 20
-  pastRotationForTheYaw: {x: 0, y: 0, z: 0}
-  pastRotationForTheRoll: {x: 0, y: 0, z: 0}
   f_throttleSpeed: 1
   f_pitchSpeed: 2
+  f_speed: 0
   ValeurSlider: {fileID: 1035954099}
   f_stickyThrottle: 0
   maxTurn: 0.5
+  reactivity_Roll: 0
+  reactivity_Pitch: 0
+  maxInclinationAngle: 0
 --- !u!1 &302864122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,6 +3290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 614700410}
   - component: {fileID: 614700409}
+  - component: {fileID: 614700411}
   m_Layer: 0
   m_Name: Xtra_330
   m_TagString: Untagged
@@ -3309,16 +3312,18 @@ MonoBehaviour:
   rollUnactive: 0
   throttleUnactive: 0
   f_StickyThrottleValor: 0
-  f_maxSpeed: 200
   f_xSpeed: 0
+  f_maxSpeed: 200
   reactivity: 20
-  pastRotationForTheYaw: {x: 0, y: 0, z: 0}
-  pastRotationForTheRoll: {x: 0, y: 0, z: 0}
   f_throttleSpeed: 1
   f_pitchSpeed: 2
+  f_speed: 0
   ValeurSlider: {fileID: 1035954099}
   f_stickyThrottle: 0
   maxTurn: 0.5
+  reactivity_Roll: 0
+  reactivity_Pitch: 0
+  maxInclinationAngle: 0
 --- !u!4 &614700410
 Transform:
   m_ObjectHideFlags: 0
@@ -3335,6 +3340,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &614700411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 614700408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdd41c584a0447409bfd483389bcdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rollUnactive: 0
+  throttleUnactive: 0
+  f_StickyThrottleValor: 0
+  f_xSpeed: 0
+  f_maxSpeed: 200
+  reactivity: 20
+  f_throttleSpeed: 1
+  f_pitchSpeed: 2
+  f_speed: 0
+  ValeurSlider: {fileID: 1035954099}
+  f_stickyThrottle: 0
+  maxTurn: 0.5
+  reactivity_Roll: 0
+  reactivity_Pitch: 0
+  maxInclinationAngle: 0
 --- !u!1 &616517923
 GameObject:
   m_ObjectHideFlags: 0
@@ -10807,7 +10838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ce0023dbbf0794e8637ee8a6bb7cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 614700409}
+  input: {fileID: 0}
   parentRect: {fileID: 1744771302}
   handleRect: {fileID: 1364482053}
   handleSpeed: 2
@@ -12720,7 +12751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8d91c115670154f863f6e5eca015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 614700409}
+  input: {fileID: 0}
   idleSource: {fileID: 1111961013}
   fullThrottleSource: {fileID: 635375444}
   maxPitchValue: 1.5
