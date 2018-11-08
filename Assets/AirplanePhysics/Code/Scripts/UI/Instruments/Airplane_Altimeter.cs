@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FakePhysics;
 
 namespace WeLoveAero
 {
@@ -8,18 +9,65 @@ namespace WeLoveAero
     {
         #region Variables
         [Header("Altimeter Properties")]
-        public Airplane_Controller airplane;
+        public Hub_Input airplane;
         public RectTransform hundredsPointer;
         public RectTransform thousandsPointer;
+
+
+        private float currentMSL;
+        public float CurrentMSL
+        {
+            get { return currentMSL; }
+        }
+
+
+        private float currentAGL;
+        public float CurrentAGL
+        {
+            get { return currentAGL; }
+        }
+
+
         #endregion
 
 
+        #region Constants
+        const float metersToFeet = 3.28084f;
+        #endregion
+
+
+
+        void Update()
+        {
+            HandleAltitude();
+            HandleAirplaneUI();
+        }
+
+
+
+
         #region Interface Methods
+        void HandleAltitude()
+        {
+            currentMSL = airplane.transform.position.y * metersToFeet;
+
+            /*
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            {
+                if (hit.transform.tag == "ground")
+                {
+                    currentAGL = (transform.position.y - hit.point.y) * metersToFeet;
+                }
+            }
+            */
+        }
+
         public void HandleAirplaneUI()
         {
-            if(airplane)
-            {
-                float currentAlt = airplane.CurrentMSL;
+            //if(airplane)
+            //{
+                float currentAlt = CurrentMSL;
                 float currentThousands = currentAlt / 1000f;
                 currentThousands = Mathf.Clamp(currentThousands, 0f, 10f);
 
@@ -39,7 +87,7 @@ namespace WeLoveAero
                     float hundredsRotation = 360f * normalizedHundreds;
                     hundredsPointer.rotation = Quaternion.Euler(0f, 0f, -hundredsRotation);
                 }
-            }
+            //}
         }
         #endregion
     }

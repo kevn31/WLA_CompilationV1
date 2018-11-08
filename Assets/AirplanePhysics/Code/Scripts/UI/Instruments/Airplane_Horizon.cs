@@ -1,28 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FakePhysics;
 
 
 
 
 namespace WeLoveAero
-{/*
+{
     public class Airplane_Horizon : MonoBehaviour, IAirplaneUI
     {
 
         #region Variables
         [Header("HorizonProperties")]
-        public Airplane_Controller airplane;
-        public Airplane_Characteristics rollCharac;
+        public Hub_Input airplane;
+        //public Airplane_Characteristics rollCharac;
         public RectTransform horizonArtificial;
         #endregion
+
+
+
+        void Update()
+        {
+           
+            HandleAirplaneUI();
+        }
+
 
 
         #region Interface Methods
         public void HandleAirplaneUI()
         {
             float horizonRotation = - airplane.transform.eulerAngles.z;
-            //Debug.Log("Rotation euler :" + horizonRotation);
+         
 
             if (airplane)
             {
@@ -33,5 +43,5 @@ namespace WeLoveAero
             }
         }
         #endregion
-    }*/
+    }
 }
