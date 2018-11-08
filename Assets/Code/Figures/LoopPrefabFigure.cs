@@ -13,7 +13,7 @@ public class LoopPrefabFigure : MonoBehaviour
 
     public bool alreadyIncrease;
 
-    public Text CheckpointSuccess;
+   // public Text CheckpointSuccess;     //a rajouter
     public Text scoreTxt;
 
     public int checkPointPassageSuccess;
@@ -28,9 +28,9 @@ public class LoopPrefabFigure : MonoBehaviour
     private int nbrGood;
     private int nbrBad;
 
-    private CalculScore scriptScore;
-    private FigureManager managerScript;
-    private GameObject manager;
+   // private CalculScore scriptScore;
+   // private FigureManager managerScript;
+    //private GameObject manager;
 
 
 
@@ -39,12 +39,12 @@ public class LoopPrefabFigure : MonoBehaviour
     {
         numberOnLoop = 1;
         checkPointPassageSuccess = 0;
-        CheckpointSuccess.enabled = false;
+       // CheckpointSuccess.enabled = false;
 
         alreadyIncrease = false;
 
-        manager = GameObject.FindWithTag("manager");
-        managerScript = manager.GetComponent<FigureManager>();
+        //manager = GameObject.FindWithTag("manager");
+       // managerScript = manager.GetComponent<FigureManager>();
       
 
 
@@ -64,7 +64,7 @@ public class LoopPrefabFigure : MonoBehaviour
         Getcheckpoint(true);
 
         CurrentFigure = GameObject.FindWithTag("onGoingFigure");
-        scriptScore = CurrentFigure.GetComponent<CalculScore>();
+      //  scriptScore = CurrentFigure.GetComponent<CalculScore>();
     }
 
 
@@ -226,8 +226,8 @@ public class LoopPrefabFigure : MonoBehaviour
             else if (checkPointPassageSuccess == 4)
             {
                 //Debug.Log("Miss...");
-                CheckpointSuccess.enabled = true;
-                CheckpointSuccess.text = "Miss...";
+               // CheckpointSuccess.enabled = true;
+               // CheckpointSuccess.text = "Miss...";
 
                 //////                  \\\\\\
                 /////                    \\\\\       
@@ -252,8 +252,8 @@ public class LoopPrefabFigure : MonoBehaviour
                 Handheld.Vibrate();
 
                 StartCoroutine(WaitAndDisable());
-                scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
-                managerScript.allowToPlace();
+                //scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
+               // managerScript.allowToPlace();
                 variableReset();
             }
 
@@ -263,8 +263,8 @@ public class LoopPrefabFigure : MonoBehaviour
                 Handheld.Vibrate();
 
                 StartCoroutine(WaitAndDisable());
-                scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
-                managerScript.allowToPlace();
+               // scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
+               // managerScript.allowToPlace();
                 variableReset();
             }
 
@@ -274,8 +274,8 @@ public class LoopPrefabFigure : MonoBehaviour
                 Handheld.Vibrate();
 
                 StartCoroutine(WaitAndDisable());
-                scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
-                managerScript.allowToPlace();
+             //   scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
+                //managerScript.allowToPlace();
                 variableReset();
             }
 
@@ -296,20 +296,20 @@ public class LoopPrefabFigure : MonoBehaviour
             Handheld.Vibrate();
 
             StartCoroutine(WaitAndDisable());
-            scriptScore.scoreTotalFigure(0, 0, 0);
-            managerScript.allowToPlace();
+           // scriptScore.scoreTotalFigure(0, 0, 0);
+           // managerScript.allowToPlace();
             variableReset();
         }
         
 
-
+                                                                                                      
     }
 
 
     public IEnumerator WaitAndDisable()
     {
         yield return new WaitForSeconds(3);
-        CheckpointSuccess.enabled = false;
+       // CheckpointSuccess.enabled = false;
 
     }
 

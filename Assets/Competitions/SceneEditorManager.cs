@@ -16,6 +16,8 @@ namespace WeLoveAero
 {
     public class SceneEditorManager : MonoBehaviour
     {
+
+        SaveContentBetweenScenesScript saveContentScript;
         EVENTCREATOR_Manager manager;
 
         essai_Manager essai;
@@ -189,7 +191,22 @@ namespace WeLoveAero
                 EventDateText.text = manager.IDateDebutEventGeneral;
 
         }
+  
+
+
+        public void SaveEventDataBeforePlayEvent()
+        {
+            saveContentScript.SaveEvent();
+         
+            //SceneManager.LoadScene("InGameTest");
+        }
+
+        public void PlayEventScene()
+        {
+          //  saveContentScript.SaveEvent();
+
+            SceneManager.LoadScene("InGameTest");
+        }
+
     }
-
-
 }

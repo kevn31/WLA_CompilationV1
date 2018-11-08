@@ -10,6 +10,7 @@ namespace WeLoveAero
     public class SaveContentBetweenScenesScript : MonoBehaviour
     {
         //scripts
+        EVENTCREATOR_Manager manager;
         //public MainMenuUIScript mainMenuUIScript;
         //
         public string ModeDeJeu;
@@ -22,8 +23,16 @@ namespace WeLoveAero
         static public string StaticModelAvion;
         static public bool StaticLogIn;                                                                                                                       
         static public string StaticTypeStage;
+        static public int[] StaticfigureNumberTabSave = new int[50];
         //infos utilisables partout mais reiniit a chaque nouvelle scene
         public bool SaveDataBetweenSceneFinished; // verifie que le script ne se joue que quand les données sont disponibles
+
+
+
+        // EVENT
+
+        //public string[] figureNameTabSave = new string[50];
+        public int[] figureNumberTabSave = new int[50];
 
         // Use this for initialization
         void Start()
@@ -69,6 +78,40 @@ namespace WeLoveAero
             TypeStage = StaticTypeStage;
 
             SaveDataBetweenSceneFinished = true;
+            for (int i = 0; i < 6; i++) 
+            {
+                figureNumberTabSave[i] = StaticfigureNumberTabSave[i];
+            }
+           
+          
+
         }
+
+        public void SaveEvent()
+        {
+            /*for (int i = 0; i < 6; i++) //reset
+            {
+                figureNumberTabSave[i] = null;
+            } */
+
+            for (int i = 0; i < 6; i++) //assigne valeurs
+            {
+                StaticfigureNumberTabSave[i] =  figureNumberTabSave[i] /*manager.tabFigureLibrarySave[i]*/;     //a changer
+               // Debug.Log("figure numero" + i + " : " + figureNumberTabSave[i]);
+            }
+                                                                                                        
+        }
+
+
+        public void WritheValuesEvent()
+        {
+            for (int i = 0; i < 5; i++) //assigne valeurs
+            {
+                Debug.Log("figure numero" + i + " : " + StaticfigureNumberTabSave[i]);
+            }
+           
+        }
+
+
     }
 }

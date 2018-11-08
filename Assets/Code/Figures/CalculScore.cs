@@ -31,8 +31,8 @@ public class CalculScore : MonoBehaviour {
         pourcentBad = 25;
 
 
-        plane =  GameObject.FindWithTag("plane");
-        scriptPrefab = plane.GetComponent<LoopPrefabFigure>();
+        //plane =  GameObject.FindWithTag("plane");
+      //  scriptPrefab = plane.GetComponent<LoopPrefabFigure>();
         
 
 
@@ -76,28 +76,28 @@ public class CalculScore : MonoBehaviour {
 
             actualScore = (perfectScore * nbrPerfect) + (goodScore * nbrGood) + (badScore * nbrBad);
             //scriptPrefab.scoreTxt.enabled = true;
-            scriptPrefab.CheckpointSuccess.enabled = true;
+           // scriptPrefab.CheckpointSuccess.enabled = true;
 
             
             if (actualScore == 100)
             {
-                scriptPrefab.CheckpointSuccess.color = Color.yellow;
-                scriptPrefab.CheckpointSuccess.text = "PERFECT Figure !";
+              //  scriptPrefab.CheckpointSuccess.color = Color.yellow;
+               // scriptPrefab.CheckpointSuccess.text = "PERFECT Figure !";
             }
 
             else if (actualScore == 0)
             {
-                scriptPrefab.CheckpointSuccess.color = Color.red;
-                scriptPrefab.CheckpointSuccess.text = "FIGURE FAILED !";
+              //  scriptPrefab.CheckpointSuccess.color = Color.red;
+              //  scriptPrefab.CheckpointSuccess.text = "FIGURE FAILED !";
             }
             else
             {
-                scriptPrefab.CheckpointSuccess.color = Color.black;
-                scriptPrefab.CheckpointSuccess.text = "Figure finished";
+               // scriptPrefab.CheckpointSuccess.color = Color.black;
+               // scriptPrefab.CheckpointSuccess.text = "Figure finished";
             }
 
             scoreTotal += actualScore;
-            scriptPrefab.scoreTxt.text = scoreTotal.ToString();
+         //   scriptPrefab.scoreTxt.text = scoreTotal.ToString();
 
             //Debug.Log(actualScore);
             Destroy(gameObject);

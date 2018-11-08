@@ -113,6 +113,34 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &459091819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 459091820}
+  m_Layer: 0
+  m_Name: EventModeGameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &459091820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 459091819}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3285.3047, y: 345.3125, z: 548.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &762002815
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +207,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &924134214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 924134216}
+  - component: {fileID: 924134215}
+  m_Layer: 0
+  m_Name: PointGeneratorPlaneAndFigures
+  m_TagString: planeGeneratorFigure
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &924134215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 924134214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b8143a81fd24f478d80194fc0e5a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOnLoop: 0
+  alreadyIncrease: 0
+  scoreTxt: {fileID: 0}
+  checkPointPassageSuccess: 0
+  figureName: 
+  nextCheckpoint: {fileID: 0}
+  CurrentCheckpoint: {fileID: 0}
+  CurrentFigure: {fileID: 0}
+--- !u!4 &924134216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 924134214}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1326134753
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +265,7 @@ GameObject:
   - component: {fileID: 1326134756}
   - component: {fileID: 1326134754}
   - component: {fileID: 1326134755}
+  - component: {fileID: 1326134757}
   m_Layer: 0
   m_Name: _manager
   m_TagString: Untagged
@@ -225,6 +302,7 @@ MonoBehaviour:
   LogIn: 0
   TypeStage: 
   SaveDataBetweenSceneFinished: 0
+  figureNumberTabSave: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &1326134756
 Transform:
   m_ObjectHideFlags: 0
@@ -238,6 +316,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1326134757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1326134753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a606f7bb469d9b4ea926fddc2e232a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabFigure:
+  - {fileID: 1985671263585724, guid: 0521fc6357e29bc42b7983f5b9482de3, type: 2}
+  - {fileID: 1618765344243364, guid: fd60a00861882974989f5a989b9f14f7, type: 2}
+  - {fileID: 1326784668346040, guid: 4ea528365d2e69040afe4a6b4bd01424, type: 2}
+  - {fileID: 100016, guid: c407265fa9c7e5f41b6e168c6ebeba92, type: 3}
+  - {fileID: 1652163955460194, guid: 750f5d9fc5a5a9749b9c51ba656e5594, type: 2}
+  alreadyPlace: 0
 --- !u!1 &1397605455
 GameObject:
   m_ObjectHideFlags: 0
