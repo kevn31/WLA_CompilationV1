@@ -38,7 +38,7 @@ namespace WeLoveAero
         {
             //if(characteristics && pointer)
             //{
-                float currentKnots = ((MPH.f_xSpeed/ maxIndicatedKnots) * MPH.f_maxSpeed )* mphToKnts;
+                float currentKnots = ((MPH.f_speed / maxIndicatedKnots) * MPH.f_maxSpeed )* mphToKnts;
                 //Debug.Log(currentKnots);
 
                 float normalizedKnots = Mathf.InverseLerp(0f, maxIndicatedKnots, currentKnots);
