@@ -14,9 +14,8 @@ namespace FakePhysics
         [SerializeField]
         private bool rollUnactive, throttleUnactive;
         [SerializeField]
-        private float f_StickyThrottleValor;
+        private float f_StickyThrottleValor, f_xSpeed;
         public float f_maxSpeed;
-        public float f_xSpeed;
         public float reactivity;
         private Vector3 pastRotationForTheYaw;
         private Vector3 pastRotationForTheRoll;
@@ -29,7 +28,7 @@ namespace FakePhysics
         protected float f_throttle = 0f;
         public float f_throttleSpeed, f_pitchSpeed = 0.5f;
 
-        protected float f_speed = 0f;
+        public float f_speed = 0f;
 
         public Slider ValeurSlider;
 
