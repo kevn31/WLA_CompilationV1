@@ -558,6 +558,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37de3380c62cf5643b518d04d2d26e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  percentageText: {fileID: 93307315}
+  ValeurThrottle: 0
 --- !u!114 &93307315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,6 +2826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545339794}
+  - component: {fileID: 545339795}
   m_Layer: 0
   m_Name: Main_Propeller_GEO
   m_TagString: Untagged
@@ -2847,6 +2850,21 @@ Transform:
   m_Father: {fileID: 660611073}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545339795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 545339793}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 93307314}
+  mainProp: {fileID: 545339793}
+  blurredProp: {fileID: 1097757347}
+  blurredProp1: {fileID: 1866537281}
 --- !u!1 &548388759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,7 +3422,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 616517923}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69be02b4ad2039b479f240f1ce795d74, type: 3}
   m_Name: 
@@ -3998,6 +4016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 660611073}
   - component: {fileID: 660611074}
+  - component: {fileID: 660611075}
   m_Layer: 0
   m_Name: Propeller_GEO
   m_TagString: Untagged
@@ -4019,6 +4038,7 @@ Transform:
   - {fileID: 545339794}
   - {fileID: 1320762347}
   - {fileID: 1097757348}
+  - {fileID: 1866537282}
   m_Father: {fileID: 1814458981}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4029,7 +4049,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 660611072}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a84f2fa5f75dbde4e8d59ac59a6f3ebd, type: 3}
   m_Name: 
@@ -4042,6 +4062,21 @@ MonoBehaviour:
   blurredPropMat: {fileID: 2100000, guid: 65b303801e0918d49987218d06568255, type: 2}
   blurLevel1: {fileID: 2800000, guid: 85577db09dbe42a4e8970aa7855e8be0, type: 3}
   blurLevel2: {fileID: 2800000, guid: 693a61af1f7c7a549afe0aab3204b7f8, type: 3}
+--- !u!114 &660611075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660611072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 93307314}
+  mainProp: {fileID: 545339793}
+  blurredProp: {fileID: 1097757347}
+  blurredProp1: {fileID: 1866537281}
 --- !u!1 &704911838
 GameObject:
   m_ObjectHideFlags: 0
@@ -4897,6 +4932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37de3380c62cf5643b518d04d2d26e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  percentageText: {fileID: 0}
+  ValeurThrottle: 0
 --- !u!114 &852413265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6432,6 +6469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1035954098}
   - component: {fileID: 1035954099}
+  - component: {fileID: 1035954100}
   m_Layer: 0
   m_Name: Throttle_Slider
   m_TagString: Untagged
@@ -6521,6 +6559,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1035954100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1035954097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff0d81c72ee0514d938578f9ba76cba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1047996231
 GameObject:
   m_ObjectHideFlags: 0
@@ -7331,6 +7380,7 @@ GameObject:
   - component: {fileID: 1097757348}
   - component: {fileID: 1097757350}
   - component: {fileID: 1097757349}
+  - component: {fileID: 1097757351}
   m_Layer: 0
   m_Name: Blur_Propeller_GEO
   m_TagString: Untagged
@@ -7396,6 +7446,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1097757347}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1097757351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1097757347}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 93307314}
+  mainProp: {fileID: 545339793}
+  blurredProp: {fileID: 1097757347}
+  blurredProp1: {fileID: 1866537281}
 --- !u!1 &1109802305
 GameObject:
   m_ObjectHideFlags: 0
@@ -11501,6 +11566,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4967490458256666, guid: f90b569114fe2fa49bf4f27a1ac5fd70,
     type: 2}
   m_PrefabInternal: {fileID: 1192233309}
+--- !u!1 &1866537281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1283136578778146, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1866537282}
+  - component: {fileID: 1866537285}
+  - component: {fileID: 1866537284}
+  - component: {fileID: 1866537283}
+  m_Layer: 0
+  m_Name: Blur_Propeller_GEO1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1866537282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4407040915279636, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866537281}
+  m_LocalRotation: {x: 0.000000014901163, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.000000115484, y: 0.00000091839723, z: 0.000011659991}
+  m_LocalScale: {x: 1.6999999, y: 1.7000043, z: 1.7000002}
+  m_Children: []
+  m_Father: {fileID: 660611073}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1866537283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866537281}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 93307314}
+  mainProp: {fileID: 545339793}
+  blurredProp: {fileID: 1866537281}
+  blurredProp1: {fileID: 1866537281}
+--- !u!23 &1866537284
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 23310546031026772, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866537281}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 2f0f74e63b862a241b91469e05427322, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1866537285
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 33912472123869638, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866537281}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1873769594
 GameObject:
   m_ObjectHideFlags: 0
@@ -12751,7 +12908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8d91c115670154f863f6e5eca015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
+  input: {fileID: 614700409}
   idleSource: {fileID: 1111961013}
   fullThrottleSource: {fileID: 635375444}
   maxPitchValue: 1.5
