@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace FakePhysics
+namespace WeLoveAero
 {
 
     public class Throttle_Percentage : MonoBehaviour
     {
-       public Text percentageText;
-       public float ValeurThrottle;
+       Text percentageText;
 
         // Use this for initialization
         void Start()
@@ -22,9 +21,7 @@ namespace FakePhysics
         public void textUpdate (float Value)
         {
             percentageText.text = Mathf.Round(Value * 100) + " %";
-            //Debug.Log(Value);
-
-            ValeurThrottle = Mathf.Round(Value * 100);
+           
 
         }
     }

@@ -22,7 +22,7 @@ public class ButtonRightAndLeft : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         if (!ispressed)
         {
-          //  Hub_InputScript.buttonNotOnClick(isRight);
+            Hub_InputScript.buttonNotOnClick(isRight);
         }
 
         else
