@@ -16,7 +16,7 @@ public class OutTrigger : MonoBehaviour {
 
     public bool teleportationResetStep;
 
-    private Rigidbody rb;
+    //private Rigidbody rb;
 
 
     private Vector3 checkpointPosition;
@@ -55,7 +55,7 @@ public class OutTrigger : MonoBehaviour {
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         teleportationResetStep = false;
         stop = true;
         actualVelocity = planeVelocity;
@@ -130,8 +130,8 @@ public class OutTrigger : MonoBehaviour {
                     transform.position = checkpointPosition;
                     transform.rotation = checkpointRotation;
 
-                    rb.angularVelocity = Vector3.zero;
-                    rb.velocity = actualVelocity;
+                    //rb.angularVelocity = Vector3.zero;
+                    //rb.velocity = actualVelocity;
 
                     teleportToNextTrigger = false;
                     teleportationResetStep = true;

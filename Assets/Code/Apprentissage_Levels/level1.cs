@@ -25,7 +25,7 @@ using UnityEngine.SceneManagement;
 
         public string[] nameGateCheckpoint;
 
-        private Rigidbody rb;
+        //private Rigidbody rb;
 
 
         private int stepLearning = 0;
@@ -53,13 +53,13 @@ using UnityEngine.SceneManagement;
         {
 
            
-            rb = GetComponent<Rigidbody>();
+            //rb = GetComponent<Rigidbody>();
             scriptTrigger = GetComponent<OutTrigger>();
             scriptLookAtArrow = modelArrow.GetComponent<LookAtArrow>();
 
-            rb.angularVelocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
 
-            rb.velocity = new Vector3(0, 0, 53.0f);
+            //rb.velocity = new Vector3(0, 0, 53.0f);
             //rb.velocity = new Vector3(-3.5f, 5.4f, 53.0f);
 
 
@@ -136,7 +136,7 @@ using UnityEngine.SceneManagement;
                 joyStickR.transform.GetChild(1).gameObject.SetActive(true);
 
 
-            if (Input.GetAxis("Pitch_Xbox") != 0 && stop)
+            if (Input.GetAxis("Pitch_manette") != 0 && stop)
                 {
                     altimeter.enabled = true;
                     foreach (Transform child in altimeter.transform)
@@ -192,7 +192,7 @@ using UnityEngine.SceneManagement;
 
             if (stepLearning == 5 && stop)
             {
-                if (Input.GetAxis("YawDroite_Xbox") != 0 && stop || Input.GetAxis("YawDroite_Xbox") != 0 && stop)
+                if (Input.GetAxis("YawDroite_manette") != 0 && stop || Input.GetAxis("YawGauche_manette") != 0 && stop)
                 {
 
                     StartCoroutine(waitBeforeStep(2f));
