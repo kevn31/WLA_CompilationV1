@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +41,7 @@ namespace FakePhysics
         private float canTurn = 0;
         [SerializeField]
         private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle;
-        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, ReactivityRollTurnZ, ReactivityRollTurnY, turnMultiplicao;
+        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, reactivityNow, turnMultiplicao;
         #endregion
 
 
@@ -286,27 +284,16 @@ namespace FakePhysics
 
             if (isRight)
             {
-                if (pastRotationRollZ > 300|| pastRotationRollZ < 180)
+                if (pastRotationRollZ > 315|| pastRotationRollZ < 180)
                 {
-                    ReactivityRollTurnZ = 100;
-                    ReactivityRollTurnY = 0;
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
-                    pastRotationRollY = transform.eulerAngles.y;
+                    reactivityNow = 50;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
                 }
-                else if(pastRotationRollZ > 270 || pastRotationRollZ < 180)
+                else if(pastRotationRollZ > 300 || pastRotationRollZ < 180)
                 {
-                    ReactivityRollTurnZ -= 10 * Time.deltaTime;
-                    ReactivityRollTurnY += 10 * Time.deltaTime;
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
-                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
-                }
-                else
-                {
-                    if(ReactivityRollTurnY < 50)
-                    {
-                        ReactivityRollTurnY += 10 * Time.deltaTime;
-                    }
-                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
+                    reactivityNow--;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
                 }
        
 
@@ -314,30 +301,11 @@ namespace FakePhysics
             else
             {
 
-                if (pastRotationRollZ < 60 || pastRotationRollZ > 180)
+                if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
                 {
-                    ReactivityRollTurnZ = 100;
-                    ReactivityRollTurnY = 0;
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
-                    pastRotationRollY = transform.eulerAngles.y;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) *100);
                 }
-
-                else if (pastRotationRollZ < 90 || pastRotationRollZ > 180)
-                {
-                    ReactivityRollTurnZ -= 10 * Time.deltaTime;
-                    ReactivityRollTurnY += 10 * Time.deltaTime;
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
-                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
-                }
-                else
-                {
-                    if (ReactivityRollTurnY < 50)
-                    {
-                        ReactivityRollTurnY += 10 * Time.deltaTime;
-                    }
-                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
-                }
-
             }
 
             transform.rotation = Quaternion.Euler(pastRotationForTheRoll.x, pastRotationRollY, pastRotationRollZ);
@@ -346,11 +314,14 @@ namespace FakePhysics
 
         public void buttonNotOnClick(bool isRight)
         {
-            pastRotationForTheRoll = transform.eulerAngles;
-            pastRotationRollZ = pastRotationForTheRoll.z;
-            pastRotationRollY = pastRotationForTheRoll.y;
-
-
+            if (isRight)
+            {
+                f_rollTurn = 0;
+            }
+            else
+            {
+                f_rollTurn = 0;
+            }
         }
 
 
