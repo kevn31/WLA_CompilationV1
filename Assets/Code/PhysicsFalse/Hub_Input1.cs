@@ -20,11 +20,11 @@ namespace FakePhysics
         private Vector3 pastRotationForTheYaw;
         private Vector3 pastRotationForTheRoll;
 
-        protected float f_pitch = 0f;
+        public float f_pitch = 0f;
         protected float f_actualPitch = 0f;
 
-        protected float f_roll = 0f;
-        protected float f_yaw = 0f;
+        public float f_roll = 0f;
+        public float f_yaw = 0f;
         protected float f_throttle = 0f;
         public float f_throttleSpeed, f_pitchSpeed = 0.5f;
 

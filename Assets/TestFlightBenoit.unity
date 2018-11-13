@@ -1876,6 +1876,68 @@ MonoBehaviour:
   reactivity_Roll: 0
   reactivity_Pitch: 0
   maxInclinationAngle: 0
+--- !u!1 &300042822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 836b7c14c038f7a4dbf31f2b52cb169f,
+    type: 3}
+  m_PrefabInternal: {fileID: 430771187}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 430771188}
+  - component: {fileID: 300042824}
+  - component: {fileID: 300042823}
+  m_Layer: 0
+  m_Name: Terrain_Cell_002
+  m_TagString: ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &300042823
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 836b7c14c038f7a4dbf31f2b52cb169f,
+    type: 3}
+  m_PrefabInternal: {fileID: 430771187}
+  m_GameObject: {fileID: 300042822}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 64cbfd24150e8424da3c3ec549d27b59, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &300042824
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3300000, guid: 836b7c14c038f7a4dbf31f2b52cb169f,
+    type: 3}
+  m_PrefabInternal: {fileID: 430771187}
+  m_GameObject: {fileID: 300042822}
+  m_Mesh: {fileID: 4300000, guid: 836b7c14c038f7a4dbf31f2b52cb169f, type: 3}
 --- !u!1 &302864122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,11 +2369,20 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 836b7c14c038f7a4dbf31f2b52cb169f, type: 3}
   m_IsPrefabAsset: 0
---- !u!4 &430771188 stripped
+--- !u!4 &430771188
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 400000, guid: 836b7c14c038f7a4dbf31f2b52cb169f,
     type: 3}
   m_PrefabInternal: {fileID: 430771187}
+  m_GameObject: {fileID: 300042822}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1554919373}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &435362066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,6 +3380,7 @@ GameObject:
   - component: {fileID: 614700409}
   - component: {fileID: 614700411}
   - component: {fileID: 614700414}
+  - component: {fileID: 614700412}
   m_Layer: 0
   m_Name: Xtra_330
   m_TagString: Untagged
@@ -3375,6 +3447,9 @@ MonoBehaviour:
   f_xSpeed: 0
   f_maxSpeed: 200
   reactivity: 20
+  f_pitch: 0
+  f_roll: 0
+  f_yaw: 0
   f_throttleSpeed: 1
   f_pitchSpeed: 2
   f_speed: 0
@@ -3384,6 +3459,24 @@ MonoBehaviour:
   reactivity_Roll: 0
   reactivity_Pitch: 0
   maxInclinationAngle: 0
+--- !u!114 &614700412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 614700408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c36b0465b858334096f05f271d0066f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 614700411}
+  controlSurfaces:
+  - {fileID: 809792722}
+  - {fileID: 1350817510}
+  - {fileID: 899022197}
+  - {fileID: 1930046645}
+  airplaneState: 0
 --- !u!82 &614700414
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4792,13 +4885,12 @@ Transform:
 --- !u!114 &809792722
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114665925428871368, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 809792720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24e0d6bbe989e1641ad0e70804e2896d, type: 3}
+  m_Script: {fileID: 11500000, guid: d708612c46f0e2845b12078c7908e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
@@ -5638,13 +5730,12 @@ Transform:
 --- !u!114 &899022197
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114290612183132758, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 899022195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24e0d6bbe989e1641ad0e70804e2896d, type: 3}
+  m_Script: {fileID: 11500000, guid: d708612c46f0e2845b12078c7908e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
@@ -8894,13 +8985,12 @@ Transform:
 --- !u!114 &1350817510
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114877354099646744, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1350817508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24e0d6bbe989e1641ad0e70804e2896d, type: 3}
+  m_Script: {fileID: 11500000, guid: d708612c46f0e2845b12078c7908e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
@@ -12384,13 +12474,12 @@ Transform:
 --- !u!114 &1930046645
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114664136064273934, guid: 9bbcdb7a6d5ee30428c7a3cbf1409b5f,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1930046643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24e0d6bbe989e1641ad0e70804e2896d, type: 3}
+  m_Script: {fileID: 11500000, guid: d708612c46f0e2845b12078c7908e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
