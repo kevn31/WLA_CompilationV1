@@ -7,6 +7,9 @@ public class LookAtArrow : MonoBehaviour {
     public Transform[] target;
     public int numberPointArrow;
     private float dist;
+    [SerializeField]
+    private int numberGate;
+
 
     // Use this for initialization
     void Start () {
@@ -15,17 +18,20 @@ public class LookAtArrow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-       dist = Vector3.Distance(transform.position, target[numberPointArrow].position);
-
-        if(dist>40)
+        
+        if(numberPointArrow < numberGate)
         {
-            transform.LookAt(target[numberPointArrow]);
+            dist = Vector3.Distance(transform.position, target[numberPointArrow].position);
+            if (dist > 40)
+            {
+                transform.LookAt(target[numberPointArrow]);
+            }
+            else
+            {
+                transform.LookAt(target[numberPointArrow + 1]);
+            }
         }
-        else
-        {
-            transform.LookAt(target[numberPointArrow+1]);
-        }
+        
     }
 
     public void increaseNumberPointArrow()

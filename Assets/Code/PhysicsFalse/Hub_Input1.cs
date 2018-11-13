@@ -213,7 +213,7 @@ namespace FakePhysics
                     //transform.Rotate(0, (f_yaw * Time.deltaTime) * reactivity, 0, Space.Self);
 
                     pastRotationForTheYaw = transform.eulerAngles;
-                    float pastRotationYaw = pastRotationForTheYaw.y + ((f_yaw * Time.deltaTime) * reactivity);
+                    float pastRotationYaw = pastRotationForTheYaw.y + ((f_yaw * Time.deltaTime) * reactivity * 2.5f);
                     transform.rotation = Quaternion.Euler(pastRotationForTheYaw.x, pastRotationYaw, pastRotationForTheYaw.z);
 
                     canTurn += 1.5f * Time.deltaTime;
