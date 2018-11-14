@@ -13,6 +13,7 @@ namespace FakePhysics
 
         [SerializeField]
         private bool rollUnactive, throttleUnactive;
+        private bool calibrationCompleted = false;
         [SerializeField]
         private float f_StickyThrottleValor, f_xSpeed;
         public float f_maxSpeed;
@@ -42,8 +43,9 @@ namespace FakePhysics
 
         private float canTurn = 0;
         [SerializeField]
-        private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle, f_minSpeed;
-        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, ReactivityRollTurnZ, ReactivityRollTurnY, turnMultiplicao, f_speedMultiplicator;
+        private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle, f_minSpeed, maxMultiplicator, minMultiplicator;
+        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, ReactivityRollTurnZ, ReactivityRollTurnY, turnMultiplicao, f_speedMultiplicator, inclinMinX, inclinMinY;
+        private float countDown = 1.0f;
 
         private Vector3 lastPosition;
         #endregion
@@ -66,17 +68,22 @@ namespace FakePhysics
         // Update is called once per frame
         void Update()
         {
-            setGyroAngleMax();
-            StickyThrottleControl();
-            HandleInput();
-            setSpeed();
-            setPitch();
-            setYaw();
-            setRoll();
-            setSpeedMultiplicator();
-            ClampInputs();
+            if (!calibrationCompleted) calibration();
+            else
+            {
+                setGyroAngleMax();
+                StickyThrottleControl();
+                HandleInput();
+                setSpeed();
+                setPitch();
+                setYaw();
+                setRoll();
+                setSpeedMultiplicator();
+                ClampInputs();
 
-            transform.Translate(Vector3.forward * Time.deltaTime * f_speed * f_speedMultiplicator);
+                transform.Translate(Vector3.forward * Time.deltaTime * f_speed * f_speedMultiplicator);
+            }
+            
         }
 
         //Create a Throttle Value that gradually grows and shrinks
@@ -191,18 +198,18 @@ namespace FakePhysics
             float speed = (transform.position - lastPosition).magnitude / Time.deltaTime;
             lastPosition = transform.position;
 
+            f_speedMultiplicator = Mathf.Clamp(f_speedMultiplicator, 0.5f, 2);
 
-            Debug.Log(speed);
+            //Debug.Log(speed);
 
             if (transform.eulerAngles.x > 10 && transform.eulerAngles.x < 180)
             {
-                f_speedMultiplicator = 2f;
+                f_speedMultiplicator = ((transform.eulerAngles.x * 2) / 180)+1 ;
             }
 
             else if (transform.eulerAngles.x < 350 && transform.eulerAngles.x > 180)
             {
-                f_speedMultiplicator = 0.5f;
-                Debug.Log(f_speedMultiplicator);
+                f_speedMultiplicator = (transform.eulerAngles.x / 180) - 1;
             }
             else
             {
@@ -389,6 +396,43 @@ namespace FakePhysics
             pastRotationForTheRoll = transform.eulerAngles;
             pastRotationRollZ = pastRotationForTheRoll.z;
             pastRotationRollY = pastRotationForTheRoll.y;
+
+        }
+
+
+
+        void calibration()
+        {
+            if (countDown >= 0.0f)
+            {
+                Debug.Log("calibration en cours");
+                countDown -= Time.deltaTime;
+
+            }
+            if (countDown < 0.0f)
+            {
+                Debug.Log("calibration fini");
+                calibrationCompleted = true;
+            }
+
+            /*calibrationTxt.text = "Calibration running, stay still on playing position";
+            countDownTxt.text = Mathf.Round(countDown).ToString();
+            calibrationTxt.enabled = true;
+            countDownTxt.enabled = true;*/
+
+            if (countDown >= 0.5f)
+            {
+                if (Input.acceleration.x < inclinMinX)
+                {
+                    inclinMinX = Input.acceleration.x;
+                }
+
+                if (Input.acceleration.y < inclinMinY)
+                {
+                    inclinMinY = Input.acceleration.y;
+                }
+            }
+
 
         }
 
