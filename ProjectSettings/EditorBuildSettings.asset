@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGameTest.unity
     guid: d194e1dbc27d0f04b9bf9b1ab4e245aa
+  - enabled: 1
+    path: Assets/Scene/Apprentissage/level1.unity
+    guid: 8114d77870585b04b8f542df22c41312
+  - enabled: 1
+    path: Assets/Scene/Apprentissage/level2.1.unity
+    guid: a334d29c737cd3f47860efa0a01bc3ce
   m_configObjects: {}

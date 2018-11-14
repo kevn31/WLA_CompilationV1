@@ -35,7 +35,7 @@ public class EndStage : MonoBehaviour {
     {
         Time.timeScale = 1f;
         Debug.Log(nextScene);
-        SceneManager.LoadScene("level2", LoadSceneMode.Single);
+        SceneManager.LoadScene("level2.1", LoadSceneMode.Single);
     }
 
     public void loadMenu()

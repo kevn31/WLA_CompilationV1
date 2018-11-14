@@ -2034,6 +2034,9 @@ MonoBehaviour:
   f_xSpeed: 0
   f_maxSpeed: 200
   reactivity: 20
+  f_pitch: 0
+  f_roll: 0
+  f_yaw: 0
   f_throttleSpeed: 1
   f_pitchSpeed: 2
   f_speed: 0
@@ -7798,7 +7801,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: level2
+          m_StringArgument: level21
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
