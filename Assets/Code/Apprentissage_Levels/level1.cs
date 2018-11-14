@@ -62,7 +62,7 @@ using UnityEngine.SceneManagement;
 
             apprentissageColor = joyStickL.GetComponent<Image>().color;
 
-            instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
+            //instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
             //instructionTxt.text = "<size=40>Change <b><color=#ed2f3bff>altitude</color></b> by moving up and down the <b><color=#ed2f3bff> right joystick </color></b></size>";
 
             joyStickR.GetComponent<Image>().color = apprentissageColor;
@@ -117,7 +117,7 @@ using UnityEngine.SceneManagement;
                 manette3.SetActive(true);
                 instructionTxt.enabled = true;
 
-                instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
+                instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving the controller<color=#ffa500ff> up and down </color></size>";
                 //instructionTxt.text = "<size=40>Change <b><color=#ed2f3bff>altitude</color></b> by moving up and down the <b><color=#ed2f3bff> right joystick </color></b></size>";
 
                 joyStickR.GetComponent<Image>().color = apprentissageColor;

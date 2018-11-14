@@ -20,7 +20,7 @@ using UnityEngine.SceneManagement;
         public GameObject manette2;
         public GameObject manette3;
 
-    public string[] nameGateCheckpoint;
+        public string[] nameGateCheckpoint;
 
         //private Rigidbody rb;
 
@@ -61,7 +61,7 @@ using UnityEngine.SceneManagement;
 
             apprentissageColor = joyStickL.GetComponent<Image>().color;
 
-            instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
+            //instructionTxt.text = "<size=60>Do a <color=#ffa500ff>right barrel</color> by moving the controller<color=#ffa500ff> to the right </color></size>";
 
             joyStickR.GetComponent<Image>().color = apprentissageColor;
             joyStickL.GetComponent<Image>().color = Color.white;
@@ -115,7 +115,8 @@ using UnityEngine.SceneManagement;
                 manette3.SetActive(true);
                 instructionTxt.enabled = true;
 
-                instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
+                //instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>right barrel</color> by moving the controller<color=#ffa500ff> to the right </color></size>";
 
                 joyStickR.GetComponent<Image>().color = apprentissageColor;
                 joyStickL.GetComponent<Image>().color = Color.white;
@@ -123,7 +124,7 @@ using UnityEngine.SceneManagement;
                 joyStickR.transform.GetChild(0).gameObject.SetActive(true);
                 joyStickR.transform.GetChild(1).gameObject.SetActive(true);
 
-            if (Input.GetAxis("Pitch_manette") != 0 && stop)
+            if (Input.GetAxis("YawDroite_manette") != 0 && stop)
                 {
                     horizon.enabled = true;
                     foreach (Transform child in horizon.transform)
@@ -167,13 +168,13 @@ using UnityEngine.SceneManagement;
                 joyStickL.transform.GetChild(2).gameObject.SetActive(true);
                 joyStickL.transform.GetChild(3).gameObject.SetActive(true);
 
-                instructionTxt.text = "<size=60> <color=#ffa500ff>Turn</color> by pressing the<color=#ffa500ff> bottom triggers</color></size>";
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>left barrel</color> by moving the controller<color=#ffa500ff> to the left </color></size>";
                 stepLearning = 5;
             }
 
             if (stepLearning == 5 && stop)
             {
-                if (Input.GetAxis("YawDroite_manette") != 0 && stop || Input.GetAxis("YawGauche_manette") != 0 && stop)
+                if (Input.GetAxis("YawGauche_manette") != 0 && stop)
                 {
                     StartCoroutine(waitBeforeStep(0.5f));
                 }
@@ -195,30 +196,30 @@ using UnityEngine.SceneManagement;
             if (stepLearning == 8 && stop)
             {
                 instructionTxt.enabled = true;
-                instructionTxt.text = "Let's practice a little !";
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>loping</color> by moving the controller<color=#ffa500ff> up </color></size>";
                 StartCoroutine(waitBeforeStep(2f));
             }
 
-            if (stepLearning == 9 && stop)
+            /*if (stepLearning == 9 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Finish the <color=#ffa500ff>5</color> rings left";
                 StartCoroutine(waitBeforeStep(2f));
-            }
+            }*/
 
-            if (stepLearning == 10 && stop)
+            if (stepLearning == 9 && stop)
             {
                 instructionTxt.enabled = false;
             }
 
-            if (stepLearning == 11 && stop)
+            if (stepLearning == 10 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Level clear";
                 StartCoroutine(waitBeforeStep(2.5f));
             }
 
-            if (stepLearning == 12 && stop)
+            if (stepLearning == 11 && stop)
             {
                 instructionTxt.enabled = false;
                 Time.timeScale = 0;
