@@ -3127,9 +3127,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c099f31185b671b44bf52c8a25c36423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+  rollUnactive: 1
+  throttleUnactive: 1
+  f_StickyThrottleValor: 0.8
+  f_xSpeed: 0
+=======
   rollUnactive: 0
   throttleUnactive: 0
   f_StickyThrottleValor: 0
+>>>>>>> 3b826a03013336ee8c20ab3a3c1c62d976e4c6a4
   f_maxSpeed: 200
   f_xSpeed: 0
   reactivity: 20
@@ -3141,6 +3148,12 @@ MonoBehaviour:
   reactivity_Roll: 5
   reactivity_Pitch: 3
   maxInclinationAngle: 0.75
+<<<<<<< HEAD
+  f_minSpeed: 50
+  maxMultiplicator: 0
+  minMultiplicator: 0
+=======
+>>>>>>> 3b826a03013336ee8c20ab3a3c1c62d976e4c6a4
 --- !u!4 &614700410
 Transform:
   m_ObjectHideFlags: 0
