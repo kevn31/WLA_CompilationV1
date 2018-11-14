@@ -13,6 +13,7 @@ namespace FakePhysics
 
         [SerializeField]
         private bool rollUnactive, throttleUnactive;
+        private bool calibrationCompleted = false;
         [SerializeField]
         private float f_StickyThrottleValor, f_xSpeed;
         public float f_maxSpeed;
@@ -38,10 +39,15 @@ namespace FakePhysics
             get { return f_stickyThrottle; }
         }
 
+        public GameObject T_Thumbstick;
+
         private float canTurn = 0;
         [SerializeField]
-        private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle;
-        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, reactivityNow, turnMultiplicao;
+        private float maxTurn, reactivity_Roll, reactivity_Pitch, maxInclinationAngle, f_minSpeed, maxMultiplicator, minMultiplicator;
+        private float accerlerationX, accerlerationY, f_rollTurn, pastRotationRollZ, pastRotationRollY, ReactivityRollTurnZ, ReactivityRollTurnY, turnMultiplicao, f_speedMultiplicator, inclinMinX, inclinMinY;
+        private float countDown = 1.0f;
+
+        private Vector3 lastPosition;
         #endregion
 
 
@@ -50,31 +56,47 @@ namespace FakePhysics
         void Start()
         {
             f_rollTurn = 0.75f;
+            f_stickyThrottle = 1f;
+
+            if (throttleUnactive)
+            {
+                T_Thumbstick.SetActive(false);
+            }
+            f_speedMultiplicator = 1;
         }
 
         // Update is called once per frame
         void Update()
         {
-            setGyroAngleMax();
-            StickyThrottleControl();
-            HandleInput();
-            setSpeed();
-            setPitch();
-            setYaw();
-            setRoll();
-            ClampInputs();
+            if (!calibrationCompleted) calibration();
+            else
+            {
+                setGyroAngleMax();
+                StickyThrottleControl();
+                HandleInput();
+                setSpeed();
+                setPitch();
+                setYaw();
+                setRoll();
+                setSpeedMultiplicator();
+                ClampInputs();
 
-            transform.Translate(Vector3.forward*Time.deltaTime * f_speed);
+                transform.Translate(Vector3.forward * Time.deltaTime * f_speed * f_speedMultiplicator);
+            }
+            
         }
 
         //Create a Throttle Value that gradually grows and shrinks
         protected virtual void StickyThrottleControl()
         {
-            f_stickyThrottle = f_stickyThrottle + (-f_throttle * f_throttleSpeed * Time.deltaTime);
+            if (!throttleUnactive)
+            {
+                f_stickyThrottle = f_stickyThrottle + (-f_throttle * f_throttleSpeed * Time.deltaTime);
 
-            f_stickyThrottle = ValeurSlider.value;
-
-            //ValeurSlider.value = f_stickyThrottle;
+                f_stickyThrottle = ValeurSlider.value;
+                //ValeurSlider.value = f_stickyThrottle;
+            }
+            
         }
 
         protected virtual void HandleInput()
@@ -84,7 +106,7 @@ namespace FakePhysics
             //f_pitch = Input.GetAxis("Pitch_manette");
 
 
-            if (Input.acceleration.y<0.02 && Input.acceleration.y > -0.02)
+            if (Input.acceleration.y < 0.02 && Input.acceleration.y > -0.02)
             {
                 accerlerationY = 0;
             }
@@ -111,8 +133,8 @@ namespace FakePhysics
                 }
             }
 
-           
-            if(Input.GetAxis("YawDroite_manette")!=0)
+
+            if (Input.GetAxis("YawDroite_manette") != 0)
             {
                 f_yaw = Input.GetAxis("YawDroite_manette");
             }
@@ -138,7 +160,7 @@ namespace FakePhysics
             }
 
         }
-        
+
 
         protected void ClampInputs()
         {
@@ -148,15 +170,15 @@ namespace FakePhysics
             f_yaw = Mathf.Clamp(f_yaw, -1f, 1f);
             f_throttle = Mathf.Clamp(f_throttle, -1f, 1f);
             f_stickyThrottle = Mathf.Clamp(f_stickyThrottle, 0f, 1f);
-            f_speed = Mathf.Clamp(f_speed, 0f, f_maxSpeed);
-          //  accerlerationX = Mathf.Clamp(accerlerationX, -1f, 1f);
-           // accerlerationY = Mathf.Clamp(accerlerationY, -1f, 1f);
+            f_speed = Mathf.Clamp(f_speed, f_minSpeed, f_maxSpeed);
+            //  accerlerationX = Mathf.Clamp(accerlerationX, -1f, 1f);
+            // accerlerationY = Mathf.Clamp(accerlerationY, -1f, 1f);
         }
 
 
         protected void setSpeed()
         {
-            f_xSpeed = f_maxSpeed* f_stickyThrottle;
+            f_xSpeed = f_maxSpeed * f_stickyThrottle;
 
             if (f_speed < f_xSpeed)
             {
@@ -167,15 +189,42 @@ namespace FakePhysics
             {
                 f_speed -= reactivity * Time.deltaTime;
             }
-            
+
+           // f_speed *= f_speedMultiplicator;
+
         }
 
-        
+        protected void setSpeedMultiplicator()
+        {
+            float speed = (transform.position - lastPosition).magnitude / Time.deltaTime;
+            lastPosition = transform.position;
+
+            f_speedMultiplicator = Mathf.Clamp(f_speedMultiplicator, 0.5f, 2);
+
+            //Debug.Log(speed);
+
+            if (transform.eulerAngles.x > 10 && transform.eulerAngles.x < 180)
+            {
+                f_speedMultiplicator = ((transform.eulerAngles.x * 2) / 180)+1 ;
+            }
+
+            else if (transform.eulerAngles.x < 350 && transform.eulerAngles.x > 180)
+            {
+                f_speedMultiplicator = (transform.eulerAngles.x / 180) - 1;
+            }
+            else
+            {
+
+                f_speedMultiplicator = 1f;
+            }
+        }
+
+
         protected void setPitch()
         {
             if (f_pitch == 0)
             {
-                if(f_actualPitch < 0)
+                if (f_actualPitch < 0)
                 {
                     f_actualPitch += 1 * Time.deltaTime * f_pitchSpeed;
                 }
@@ -190,17 +239,17 @@ namespace FakePhysics
             {
                 f_actualPitch += f_pitch * Time.deltaTime * f_pitchSpeed;
             }
-           
-            
 
-            transform.Rotate((f_pitch * Time.deltaTime)*reactivity, 0, 0, Space.Self);
+
+
+            transform.Rotate((f_pitch * Time.deltaTime) * reactivity, 0, 0, Space.Self);
         }
 
 
 
         protected void setYaw()
         {
-            if(f_yaw == 0)
+            if (f_yaw == 0)
             {   //maxTurn
                 canTurn = 0f;
             }
@@ -235,7 +284,7 @@ namespace FakePhysics
 
             if (Input.acceleration.x > -maxInclinationAngle && Input.acceleration.x < maxInclinationAngle)
             {
-                accerlerationX = Input.acceleration.x / maxInclinationAngle; 
+                accerlerationX = Input.acceleration.x / maxInclinationAngle;
             }
 
             if (Input.acceleration.y > -maxInclinationAngle && Input.acceleration.y < maxInclinationAngle)
@@ -250,7 +299,6 @@ namespace FakePhysics
         {
             pastRotationForTheRoll = transform.eulerAngles;
 
-<<<<<<< HEAD
             if (f_rollTurn < 0)
             {
                 if (pastRotationRollZ > 320 || pastRotationRollZ < 180)
@@ -304,29 +352,6 @@ namespace FakePhysics
                     }
                     pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
                 }
-=======
-            //Debug.Log(pastRotationRollZ);
-            if (f_rollTurn != 0)
-                {
-                    if (pastRotationRollZ > 315 || pastRotationRollZ < 180)
-                    {
-                        pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
-                        pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * reactivity);
-                    }
-                }
-
-                if(f_rollTurn != 0)
-                {
-                    if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
-                    {
-                        pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
-                        pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * reactivity);
-                    
-                    }
-                }
-                
-            pastRotationRollY = pastRotationForTheRoll.y + ((f_roll * Time.deltaTime) * reactivity);
->>>>>>> 3b826a03013336ee8c20ab3a3c1c62d976e4c6a4
 
             }
 
@@ -342,28 +367,58 @@ namespace FakePhysics
 
             if (isRight)
             {
-                if (pastRotationRollZ > 315|| pastRotationRollZ < 180)
+                if (pastRotationRollZ > 320 || pastRotationRollZ < 180)
                 {
-                    reactivityNow = 50;
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                    ReactivityRollTurnZ = 200;
+                    ReactivityRollTurnY = 20;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
+                    pastRotationRollY = transform.eulerAngles.y;
                 }
-                else if(pastRotationRollZ > 300 || pastRotationRollZ < 180)
+                else if (pastRotationRollZ > 270 || pastRotationRollZ < 180)
                 {
-                    reactivityNow--;
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
-                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
+                    ReactivityRollTurnZ -= 50 * Time.deltaTime;
+                    ReactivityRollTurnY += 10 * Time.deltaTime;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
                 }
-       
+                else
+                {
+                    if (ReactivityRollTurnY < 50)
+                    {
+                        ReactivityRollTurnY += 10 * Time.deltaTime;
+                    }
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
+                }
+
 
             }
             else
             {
 
-                if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
+                if (pastRotationRollZ < 40 || pastRotationRollZ > 180)
                 {
-                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
-                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) *100);
+                    ReactivityRollTurnZ = 200;
+                    ReactivityRollTurnY = 20;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
+                    pastRotationRollY = transform.eulerAngles.y;
                 }
+
+                else if (pastRotationRollZ < 90 || pastRotationRollZ > 180)
+                {
+                    ReactivityRollTurnZ -= 50 * Time.deltaTime;
+                    ReactivityRollTurnY += 10 * Time.deltaTime;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * ReactivityRollTurnZ);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
+                }
+                else
+                {
+                    if (ReactivityRollTurnY < 50)
+                    {
+                        ReactivityRollTurnY += 10 * Time.deltaTime;
+                    }
+                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) * ReactivityRollTurnY);
+                }
+
             }
 
             transform.rotation = Quaternion.Euler(pastRotationForTheRoll.x, pastRotationRollY, pastRotationRollZ);
@@ -372,14 +427,47 @@ namespace FakePhysics
 
         public void buttonNotOnClick(bool isRight)
         {
-            if (isRight)
+            pastRotationForTheRoll = transform.eulerAngles;
+            pastRotationRollZ = pastRotationForTheRoll.z;
+            pastRotationRollY = pastRotationForTheRoll.y;
+
+        }
+
+
+
+        void calibration()
+        {
+            if (countDown >= 0.0f)
             {
-                f_rollTurn = 0;
+                Debug.Log("calibration en cours");
+                countDown -= Time.deltaTime;
+
             }
-            else
+            if (countDown < 0.0f)
             {
-                f_rollTurn = 0;
+                Debug.Log("calibration fini");
+                calibrationCompleted = true;
             }
+
+            /*calibrationTxt.text = "Calibration running, stay still on playing position";
+            countDownTxt.text = Mathf.Round(countDown).ToString();
+            calibrationTxt.enabled = true;
+            countDownTxt.enabled = true;*/
+
+            if (countDown >= 0.5f)
+            {
+                if (Input.acceleration.x < inclinMinX)
+                {
+                    inclinMinX = Input.acceleration.x;
+                }
+
+                if (Input.acceleration.y < inclinMinY)
+                {
+                    inclinMinY = Input.acceleration.y;
+                }
+            }
+
+
         }
 
 
