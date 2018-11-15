@@ -439,13 +439,11 @@ namespace FakePhysics
         {
             if (countDown >= 0.0f)
             {
-                Debug.Log("calibration en cours");
                 countDown -= Time.deltaTime;
 
             }
             if (countDown < 0.0f)
             {
-                Debug.Log("calibration fini");
                 calibrationCompleted = true;
             }
 

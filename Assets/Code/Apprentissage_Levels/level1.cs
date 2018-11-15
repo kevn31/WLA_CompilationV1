@@ -38,7 +38,6 @@ using UnityEngine.SceneManagement;
         private string test;
 
         private OutTrigger scriptTrigger;
-        private LookAtArrow scriptLookAtArrow;
         [SerializeField]
         private GameObject modelArrow;
         private bool functionArrowAlreadyPlayed = false;
@@ -50,7 +49,6 @@ using UnityEngine.SceneManagement;
             Time.timeScale = 1;
             //rb = GetComponent<Rigidbody>();
             scriptTrigger = GetComponent<OutTrigger>();
-            scriptLookAtArrow = modelArrow.GetComponent<LookAtArrow>();
 
             //rb.angularVelocity = Vector3.zero;
 
@@ -92,21 +90,21 @@ using UnityEngine.SceneManagement;
             {
                 stepLearning = 0;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(0);
+                scriptTrigger.callArrow(0);
             }
 
             if (numberTrigger == 2)
             {
                 stepLearning = 4;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(3);
+                scriptTrigger.callArrow(3);
             }
 
             if (numberTrigger == 3)
             {
                 stepLearning = 9;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(6);
+                scriptTrigger.callArrow(6);
             }
         }
 
@@ -272,7 +270,6 @@ using UnityEngine.SceneManagement;
 
                 if (!functionArrowAlreadyPlayed)
                 {
-                    scriptLookAtArrow.increaseNumberPointArrow();
                     functionArrowAlreadyPlayed = true;
                 }
             }

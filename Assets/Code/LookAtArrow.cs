@@ -13,8 +13,7 @@ public class LookAtArrow : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,15 +32,28 @@ public class LookAtArrow : MonoBehaviour {
         }
         
     }
-
     public void increaseNumberPointArrow()
     {
-        Debug.Log("scriptLookAtArrow launching");
-        numberPointArrow++;
+
     }
 
     public void decreaseeNumberPointArrow(int number)
     {
         numberPointArrow = number;
+    }
+
+    public void getTheNextGate(Collider other)
+    {
+        for (int i = 0; i < target.Length; i++)
+        {
+
+            if (target[i].name == other.name)
+            {
+                numberPointArrow = i + 1;
+                i = target.Length;
+            }
+
+        }
+        
     }
 }

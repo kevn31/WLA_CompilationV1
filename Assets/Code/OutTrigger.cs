@@ -7,6 +7,8 @@ using WeLoveAero;
 public class OutTrigger : MonoBehaviour {
 
     private bool onHoops = false;
+    public LookAtArrow arrowScript;
+
 
 
     #region replace plane after going out trigger
@@ -157,27 +159,47 @@ public class OutTrigger : MonoBehaviour {
 
     }
 
-    void FixedUpdate()
-    {
-        onTriggerStay = false;
+
+            void FixedUpdate()
+            {
+                onTriggerStay = false;
         
-    }
-   
+            }
 
-    void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "triggerCheckpoint" && !onHoops)
-        {
-            onTrigger = true;
-        }
 
-        if (other.tag == "triggerCheckpoint")
-        {
+            void OnTriggerEnter(Collider other)
+            {
+                if (other.tag == "gate")
+                {
+                    arrowScript.getTheNextGate(other);
+                }
+            }
 
-            onTriggerStay = true;
-        }
 
-    }
+
+
+            public void callArrow (int number)
+            {
+                arrowScript.decreaseeNumberPointArrow(number);
+            }
+
+
+
+            void OnTriggerStay(Collider other)
+            {
+
+                if (other.tag == "triggerCheckpoint" && !onHoops)
+                {
+                    onTrigger = true;
+                }
+
+                if (other.tag == "triggerCheckpoint")
+                {
+
+                    onTriggerStay = true;
+                }
+
+            }
 
 
 
