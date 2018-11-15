@@ -17,6 +17,7 @@ using UnityEngine.SceneManagement;
 
         public Image joyStickL;
         public Image joyStickR;
+        public GameObject manette;
         public GameObject manette2;
         public GameObject manette3;
 
@@ -37,7 +38,6 @@ using UnityEngine.SceneManagement;
         private string test;
 
         private OutTrigger scriptTrigger;
-        private LookAtArrow scriptLookAtArrow;
         [SerializeField]
         private GameObject modelArrow;
         private bool functionArrowAlreadyPlayed = false;
@@ -49,7 +49,6 @@ using UnityEngine.SceneManagement;
             Time.timeScale = 1;
             //rb = GetComponent<Rigidbody>();
             scriptTrigger = GetComponent<OutTrigger>();
-            scriptLookAtArrow = modelArrow.GetComponent<LookAtArrow>();
 
             //rb.angularVelocity = Vector3.zero;
 
@@ -81,8 +80,8 @@ using UnityEngine.SceneManagement;
         void Update()
         {
 
-        rotationPlane = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(rotationPlane.x, rotationPlane.y, 0);
+        /*rotationPlane = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(rotationPlane.x, rotationPlane.y, 0);*/
 
         if (scriptTrigger.teleportationResetStep)
         {
@@ -90,21 +89,21 @@ using UnityEngine.SceneManagement;
             {
                 stepLearning = 0;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(0);
+                //scriptTrigger.decreaseeNumberPointArrow(0);
             }
 
             if (numberTrigger == 2)
             {
                 stepLearning = 4;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(3);
+               // scriptTrigger.decreaseeNumberPointArrow(3);
             }
 
             if (numberTrigger == 3)
             {
                 stepLearning = 9;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(6);
+               // scriptTrigger.decreaseeNumberPointArrow(6);
             }
         }
 
@@ -112,10 +111,9 @@ using UnityEngine.SceneManagement;
             {
                 apprentissageColor = joyStickL.GetComponent<Image>().color;
 
-                manette3.SetActive(true);
+                manette.SetActive(true);
                 instructionTxt.enabled = true;
 
-                //instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
                 instructionTxt.text = "<size=60>Do a <color=#ffa500ff>right barrel</color> by moving the controller<color=#ffa500ff> to the right </color></size>";
 
                 joyStickR.GetComponent<Image>().color = apprentissageColor;
@@ -124,7 +122,7 @@ using UnityEngine.SceneManagement;
                 joyStickR.transform.GetChild(0).gameObject.SetActive(true);
                 joyStickR.transform.GetChild(1).gameObject.SetActive(true);
 
-            if (Input.GetAxis("YawDroite_manette") != 0 && stop)
+            if (Input.GetAxis("Roll_manette") == 1 && stop)
                 {
                     horizon.enabled = true;
                     foreach (Transform child in horizon.transform)
@@ -137,13 +135,13 @@ using UnityEngine.SceneManagement;
 
             if (stepLearning == 1 && stop)
             {
-                manette3.SetActive(false);
+                manette.SetActive(false);
                 instructionTxt.enabled = false;
             }
 
             if (stepLearning == 2 && stop)
             {
-                manette3.SetActive(false);
+                manette.SetActive(false);
                 instructionTxt.enabled = false;
             }
 
@@ -174,7 +172,7 @@ using UnityEngine.SceneManagement;
 
             if (stepLearning == 5 && stop)
             {
-                if (Input.GetAxis("YawGauche_manette") != 0 && stop)
+                if (Input.GetAxis("Roll_manette") == -1 && stop)
                 {
                     StartCoroutine(waitBeforeStep(0.5f));
                 }
@@ -196,30 +194,40 @@ using UnityEngine.SceneManagement;
             if (stepLearning == 8 && stop)
             {
                 instructionTxt.enabled = true;
-                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>loping</color> by moving the controller<color=#ffa500ff> up </color></size>";
-                StartCoroutine(waitBeforeStep(2f));
-            }
+                manette3.SetActive(true);
 
-            /*if (stepLearning == 9 && stop)
-            {
-                instructionTxt.enabled = true;
-                instructionTxt.text = "Finish the <color=#ffa500ff>5</color> rings left";
-                StartCoroutine(waitBeforeStep(2f));
-            }*/
+                joyStickL.GetComponent<Image>().color = apprentissageColor;
+                joyStickR.GetComponent<Image>().color = Color.white;
+
+                joyStickL.transform.GetChild(2).gameObject.SetActive(true);
+                joyStickL.transform.GetChild(3).gameObject.SetActive(true);
+
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>loping</color> by moving the controller<color=#ffa500ff> up </color></size>";
+                stepLearning = 9;
+            }
 
             if (stepLearning == 9 && stop)
             {
-                instructionTxt.enabled = false;
+                if (Input.GetAxis("Pitch_manette") == -1 && stop)
+                {
+                    StartCoroutine(waitBeforeStep(0.5f));
+                }
             }
 
             if (stepLearning == 10 && stop)
+            {
+                manette3.SetActive(false);
+                instructionTxt.enabled = false;
+            }
+
+            if (stepLearning == 11 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Level clear";
                 StartCoroutine(waitBeforeStep(2.5f));
             }
 
-            if (stepLearning == 11 && stop)
+            if (stepLearning == 12 && stop)
             {
                 instructionTxt.enabled = false;
                 Time.timeScale = 0;
@@ -228,7 +236,6 @@ using UnityEngine.SceneManagement;
 
             if (instructionTxt.enabled == false)
             {
-                //Debug.Log("Text et boite de text desactivé");
                 panelInstruction.SetActive(false);
             }
 
@@ -270,7 +277,6 @@ using UnityEngine.SceneManagement;
 
                 if (!functionArrowAlreadyPlayed)
                 {
-                    scriptLookAtArrow.increaseNumberPointArrow();
                     functionArrowAlreadyPlayed = true;
                 }
             }
