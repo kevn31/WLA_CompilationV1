@@ -7,8 +7,6 @@ using WeLoveAero;
 public class OutTrigger : MonoBehaviour {
 
     private bool onHoops = false;
-    public LookAtArrow arrowScript;
-
 
 
     #region replace plane after going out trigger
@@ -18,7 +16,7 @@ public class OutTrigger : MonoBehaviour {
 
     public bool teleportationResetStep;
 
-    //private Rigidbody rb;
+    private Rigidbody rb;
 
 
     private Vector3 checkpointPosition;
@@ -57,7 +55,7 @@ public class OutTrigger : MonoBehaviour {
 
     void Start()
     {
-        //rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         teleportationResetStep = false;
         stop = true;
         actualVelocity = planeVelocity;
@@ -132,8 +130,8 @@ public class OutTrigger : MonoBehaviour {
                     transform.position = checkpointPosition;
                     transform.rotation = checkpointRotation;
 
-                    //rb.angularVelocity = Vector3.zero;
-                    //rb.velocity = actualVelocity;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.velocity = actualVelocity;
 
                     teleportToNextTrigger = false;
                     teleportationResetStep = true;
@@ -159,47 +157,27 @@ public class OutTrigger : MonoBehaviour {
 
     }
 
-
-            void FixedUpdate()
-            {
-                onTriggerStay = false;
+    void FixedUpdate()
+    {
+        onTriggerStay = false;
         
-            }
+    }
+   
 
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "triggerCheckpoint" && !onHoops)
+        {
+            onTrigger = true;
+        }
 
-            void OnTriggerEnter(Collider other)
-            {
-                if (other.tag == "gate")
-                {
-                    arrowScript.getTheNextGate(other);
-                }
-            }
+        if (other.tag == "triggerCheckpoint")
+        {
 
+            onTriggerStay = true;
+        }
 
-
-
-            public void callArrow (int number)
-            {
-                arrowScript.decreaseeNumberPointArrow(number);
-            }
-
-
-
-            void OnTriggerStay(Collider other)
-            {
-
-                if (other.tag == "triggerCheckpoint" && !onHoops)
-                {
-                    onTrigger = true;
-                }
-
-                if (other.tag == "triggerCheckpoint")
-                {
-
-                    onTriggerStay = true;
-                }
-
-            }
+    }
 
 
 

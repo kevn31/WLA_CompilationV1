@@ -560,8 +560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37de3380c62cf5643b518d04d2d26e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percentageText: {fileID: 0}
-  ValeurThrottle: 0
 --- !u!114 &93307315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3131,23 +3129,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rollUnactive: 0
   throttleUnactive: 0
-  f_StickyThrottleValor: 0.8
-  f_xSpeed: 0
+  f_StickyThrottleValor: 0
   f_maxSpeed: 200
+  f_xSpeed: 0
   reactivity: 20
   f_throttleSpeed: 1
   f_pitchSpeed: 2
-  f_speed: 0
   ValeurSlider: {fileID: 1035954099}
   f_stickyThrottle: 0
-  T_Thumbstick: {fileID: 1744771301}
   maxTurn: 0.5
   reactivity_Roll: 5
   reactivity_Pitch: 3
   maxInclinationAngle: 0.75
-  f_minSpeed: 50
-  maxMultiplicator: 0
-  minMultiplicator: 0
 --- !u!4 &614700410
 Transform:
   m_ObjectHideFlags: 0
@@ -4693,8 +4686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37de3380c62cf5643b518d04d2d26e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percentageText: {fileID: 0}
-  ValeurThrottle: 0
 --- !u!114 &852413265
 MonoBehaviour:
   m_ObjectHideFlags: 0
