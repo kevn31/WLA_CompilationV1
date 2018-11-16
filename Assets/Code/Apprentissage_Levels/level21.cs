@@ -122,7 +122,7 @@ using UnityEngine.SceneManagement;
                 joyStickR.transform.GetChild(0).gameObject.SetActive(true);
                 joyStickR.transform.GetChild(1).gameObject.SetActive(true);
 
-            if (Input.GetAxis("Roll_manette") == 1 && stop)
+            if (Input.GetAxis("Roll_manette") > 0.9 && stop)
                 {
                     horizon.enabled = true;
                     foreach (Transform child in horizon.transform)
@@ -139,13 +139,13 @@ using UnityEngine.SceneManagement;
                 instructionTxt.enabled = false;
             }
 
-            if (stepLearning == 2 && stop)
+            /*if (stepLearning == 2 && stop)
             {
                 manette.SetActive(false);
                 instructionTxt.enabled = false;
-            }
+            }*/
 
-            if (stepLearning == 3 && stop)
+            if (stepLearning == 2 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Well Done";
@@ -154,7 +154,7 @@ using UnityEngine.SceneManagement;
                 StartCoroutine(waitBeforeStep(1f));
             }
 
-            if (stepLearning == 4 && stop)
+            if (stepLearning == 3 && stop)
             {
                 instructionTxt.enabled = true;
 
@@ -167,31 +167,31 @@ using UnityEngine.SceneManagement;
                 joyStickL.transform.GetChild(3).gameObject.SetActive(true);
 
                 instructionTxt.text = "<size=60>Do a <color=#ffa500ff>left barrel</color> by moving the controller<color=#ffa500ff> to the left </color></size>";
-                stepLearning = 5;
+                stepLearning = 4;
             }
 
-            if (stepLearning == 5 && stop)
+            if (stepLearning == 4 && stop)
             {
-                if (Input.GetAxis("Roll_manette") == -1 && stop)
+                if (Input.GetAxis("Roll_manette") <-0.9 && stop)
                 {
                     StartCoroutine(waitBeforeStep(0.5f));
                 }
             }
 
-            if (stepLearning == 6 && stop)
+            if (stepLearning == 5 && stop)
             {
                 manette2.SetActive(false);
                 instructionTxt.enabled = false;
             }
 
-            if (stepLearning == 7 && stop)
+            if (stepLearning == 6 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Well Done";
                 StartCoroutine(waitBeforeStep(1f));
             }
 
-            if (stepLearning == 8 && stop)
+            if (stepLearning == 7 && stop)
             {
                 instructionTxt.enabled = true;
                 manette3.SetActive(true);
@@ -203,31 +203,31 @@ using UnityEngine.SceneManagement;
                 joyStickL.transform.GetChild(3).gameObject.SetActive(true);
 
                 instructionTxt.text = "<size=60>Do a <color=#ffa500ff>loping</color> by moving the controller<color=#ffa500ff> up </color></size>";
-                stepLearning = 9;
+                stepLearning = 8;
             }
 
-            if (stepLearning == 9 && stop)
+            if (stepLearning == 8 && stop)
             {
-                if (Input.GetAxis("Pitch_manette") == -1 && stop)
+                if (Input.GetAxis("Pitch_manette") < -0.9 && stop)
                 {
                     StartCoroutine(waitBeforeStep(0.5f));
                 }
             }
 
-            if (stepLearning == 10 && stop)
+            if (stepLearning == 9 && stop)
             {
                 manette3.SetActive(false);
                 instructionTxt.enabled = false;
             }
 
-            if (stepLearning == 11 && stop)
+            if (stepLearning == 10 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Level clear";
                 StartCoroutine(waitBeforeStep(2.5f));
             }
 
-            if (stepLearning == 12 && stop)
+            if (stepLearning == 11 && stop)
             {
                 instructionTxt.enabled = false;
                 Time.timeScale = 0;
@@ -284,19 +284,19 @@ using UnityEngine.SceneManagement;
             if (other.name == "NextSequence01" && numberTrigger != 1)
             {
                 numberCheckpoint = 0;
-                stepLearning = 3;
+                stepLearning = 2;
             }
 
             if (other.name == "NextSequence02" && numberTrigger != 2)
             {
                 numberCheckpoint = 0;
-                stepLearning = 7;
+                stepLearning = 6;
             }
 
             if (other.name == "NextSequence03" && numberTrigger != 3)
             {
                 numberCheckpoint = 0;
-                stepLearning = 11;
+                stepLearning = 10;
             }
 
             if (numberTrigger == 1)
