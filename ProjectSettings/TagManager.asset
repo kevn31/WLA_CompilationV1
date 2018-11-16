@@ -14,6 +14,10 @@ TagManager:
   - large
   - medium
   - planeGeneratorFigure
+  - triggerCheckpoint
+  - ground
+  - gate
+  - enveloppe
   layers:
   - Default
   - TransparentFX
