@@ -14,12 +14,15 @@ public class EndStage : MonoBehaviour {
 
        // canvas1.SetActive(false);
         //canvas2.SetActive(false);
+
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+    
+   
 
     public void restart()
     {
@@ -32,7 +35,7 @@ public class EndStage : MonoBehaviour {
     {
         Time.timeScale = 1f;
         Debug.Log(nextScene);
-        SceneManager.LoadScene("level2.1", LoadSceneMode.Single);
+        SceneManager.LoadScene("level2", LoadSceneMode.Single);
     }
 
     public void loadMenu()

@@ -12435,21 +12435,6 @@ Prefab:
       propertyPath: database
       value: wlav2
       objectReference: {fileID: 0}
-    - target: {fileID: 114298677134742848, guid: af8b359cf156e7446a4a2440f3f06490,
-        type: 2}
-      propertyPath: password
-      value: '?]89342\6H '
-      objectReference: {fileID: 0}
-    - target: {fileID: 114298677134742848, guid: af8b359cf156e7446a4a2440f3f06490,
-        type: 2}
-      propertyPath: username
-      value: wla_gaming_root
-      objectReference: {fileID: 0}
-    - target: {fileID: 114298677134742848, guid: af8b359cf156e7446a4a2440f3f06490,
-        type: 2}
-      propertyPath: host
-      value: wla-gaming-test.canc1g3sm46d.eu-west-2.rds.amazonaws.com
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af8b359cf156e7446a4a2440f3f06490, type: 2}
   m_IsPrefabAsset: 0
