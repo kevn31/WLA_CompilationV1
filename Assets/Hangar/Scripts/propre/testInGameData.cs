@@ -19,7 +19,7 @@ namespace WeLoveAero
             saveContentScript = GameObject.Find("_manager").GetComponent<SaveContentBetweenScenesScript>();
 
 
-            Debug.Log("model de l avion:  " + testSccript.ModelAvion);
+       //     Debug.Log("model de l avion:  " + testSccript.ModelAvion);
             test = false;
             // Debug.Log( "model de l avion:  " + testSccript.StaticModelAvionTest);
          
@@ -35,7 +35,7 @@ namespace WeLoveAero
                //saveContentScript.WritheValuesEvent();
                 for (int i = 0; i < 5; i++) //assigne valeurs
                 {
-                    Debug.Log("figure numero" + i + " : " + saveContentScript.figureNumberTabSave[i]);
+                   // Debug.Log("figure numero" + i + " : " + saveContentScript.figureNumberTabSave[i]);
                 }
             }
            else

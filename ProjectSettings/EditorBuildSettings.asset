@@ -14,8 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Database.unity
     guid: dc54ea0f3891e7a46b02e8e4a413cf21
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+  - enabled: 0
+    path: Assets/__DELETED_GUID_Trash/89e409739f42d09459d57ae272154635
     guid: 89e409739f42d09459d57ae272154635
   - enabled: 1
     path: Assets/Scenes/HangarScene.unity
@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGameTest.unity
     guid: d194e1dbc27d0f04b9bf9b1ab4e245aa
+  - enabled: 1
+    path: Assets/Scenes/TestEventFlight.unity
+    guid: e5541dc6fc73a2a47a4d72b3f27f8017
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: edc9ffc46b54d66468f14e8778bc3b7b
   m_configObjects: {}
