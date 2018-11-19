@@ -4,17 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-    public class level1 : MonoBehaviour
+    public class level21 : MonoBehaviour
     {
-
         public Text instructionTxt;
 
         public GameObject panelInstruction;
         public GameObject panelHiding;
 
-
-        public Image altimeter;
+        public Image horizon;
 
         public GameObject canvas_EndLevel;
 
@@ -22,11 +19,11 @@ using UnityEngine.SceneManagement;
         public Image joyStickR;
         public GameObject manette;
         public GameObject manette2;
+        public GameObject manette3;
 
         public string[] nameGateCheckpoint;
 
-        private Rigidbody rb;
-
+        //private Rigidbody rb;
 
         private int stepLearning = 0;
         private int numberCheckpoint = 0;
@@ -41,35 +38,29 @@ using UnityEngine.SceneManagement;
         private string test;
 
         private OutTrigger scriptTrigger;
-        private LookAtArrow scriptLookAtArrow;
         [SerializeField]
         private GameObject modelArrow;
         private bool functionArrowAlreadyPlayed = false;
 
         private Vector3 rotationPlane;
 
-
     void Start()
         {
-
-           
-            rb = GetComponent<Rigidbody>();
+            Time.timeScale = 1;
+            //rb = GetComponent<Rigidbody>();
             scriptTrigger = GetComponent<OutTrigger>();
-            scriptLookAtArrow = modelArrow.GetComponent<LookAtArrow>();
 
-            rb.angularVelocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
 
-            rb.velocity = new Vector3(0, 0, 53.0f);
+            //rb.velocity = new Vector3(0, 0, 53.0f);
             //rb.velocity = new Vector3(-3.5f, 5.4f, 53.0f);
-
 
             stepLearning = 0;
             stop = true;
 
             apprentissageColor = joyStickL.GetComponent<Image>().color;
 
-            instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
-            //instructionTxt.text = "<size=40>Change <b><color=#ed2f3bff>altitude</color></b> by moving up and down the <b><color=#ed2f3bff> right joystick </color></b></size>";
+            //instructionTxt.text = "<size=60>Do a <color=#ffa500ff>right barrel</color> by moving the controller<color=#ffa500ff> to the right </color></size>";
 
             joyStickR.GetComponent<Image>().color = apprentissageColor;
             joyStickL.GetComponent<Image>().color = Color.white;
@@ -77,24 +68,20 @@ using UnityEngine.SceneManagement;
             joyStickR.transform.GetChild(0).gameObject.SetActive(true);
             joyStickR.transform.GetChild(1).gameObject.SetActive(true);
 
-
-
-            altimeter.enabled = false;
-            foreach (Transform child in altimeter.transform)
+            horizon.enabled = false;
+            foreach (Transform child in horizon.transform)
             {
                 child.gameObject.SetActive(false);
             }
 
             panelHiding.SetActive(false);
-
         }
-
 
         void Update()
         {
 
-        rotationPlane = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(rotationPlane.x, rotationPlane.y, 0);
+        /*rotationPlane = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(rotationPlane.x, rotationPlane.y, 0);*/
 
         if (scriptTrigger.teleportationResetStep)
         {
@@ -102,22 +89,23 @@ using UnityEngine.SceneManagement;
             {
                 stepLearning = 0;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(0);
+                //scriptTrigger.decreaseeNumberPointArrow(0);
             }
+
             if (numberTrigger == 2)
             {
                 stepLearning = 4;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(3);
+               // scriptTrigger.decreaseeNumberPointArrow(3);
             }
+
             if (numberTrigger == 3)
             {
                 stepLearning = 9;
                 numberCheckpoint = 0;
-                scriptLookAtArrow.decreaseeNumberPointArrow(6);
+               // scriptTrigger.decreaseeNumberPointArrow(6);
             }
         }
-        
 
         if (stepLearning == 0)
             {
@@ -126,8 +114,7 @@ using UnityEngine.SceneManagement;
                 manette.SetActive(true);
                 instructionTxt.enabled = true;
 
-                instructionTxt.text = "<size=60>Change <color=#ffa500ff>altitude</color> by moving up and down the<color=#ffa500ff> right joystick </color></size>";
-                //instructionTxt.text = "<size=40>Change <b><color=#ed2f3bff>altitude</color></b> by moving up and down the <b><color=#ed2f3bff> right joystick </color></b></size>";
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>right barrel</color> by moving the controller<color=#ffa500ff> to the right </color></size>";
 
                 joyStickR.GetComponent<Image>().color = apprentissageColor;
                 joyStickL.GetComponent<Image>().color = Color.white;
@@ -135,11 +122,10 @@ using UnityEngine.SceneManagement;
                 joyStickR.transform.GetChild(0).gameObject.SetActive(true);
                 joyStickR.transform.GetChild(1).gameObject.SetActive(true);
 
-
-            if (Input.GetAxis("Pitch_Xbox") != 0 && stop)
+            if (Input.GetAxis("Roll_manette") > 0.9 && stop)
                 {
-                    altimeter.enabled = true;
-                    foreach (Transform child in altimeter.transform)
+                    horizon.enabled = true;
+                    foreach (Transform child in horizon.transform)
                     {
                         child.gameObject.SetActive(true);
                     }
@@ -151,28 +137,24 @@ using UnityEngine.SceneManagement;
             {
                 manette.SetActive(false);
                 instructionTxt.enabled = false;
-
             }
 
-            if (stepLearning == 2 && stop)
+            /*if (stepLearning == 2 && stop)
             {
                 manette.SetActive(false);
                 instructionTxt.enabled = false;
+            }*/
 
-            }
-
-            if (stepLearning == 3 && stop)
+            if (stepLearning == 2 && stop)
             {
                 instructionTxt.enabled = true;
                 instructionTxt.text = "Well Done";
                 joyStickR.transform.GetChild(0).gameObject.SetActive(false);
                 joyStickR.transform.GetChild(1).gameObject.SetActive(false);
-                StartCoroutine(waitBeforeStep(2f));
-
+                StartCoroutine(waitBeforeStep(1f));
             }
 
-
-            if (stepLearning == 4 && stop)
+            if (stepLearning == 3 && stop)
             {
                 instructionTxt.enabled = true;
 
@@ -184,111 +166,104 @@ using UnityEngine.SceneManagement;
                 joyStickL.transform.GetChild(2).gameObject.SetActive(true);
                 joyStickL.transform.GetChild(3).gameObject.SetActive(true);
 
-
-                instructionTxt.text = "<size=60> <color=#ffa500ff>Turn</color> by pressing the<color=#ffa500ff> bottom triggers</color></size>";
-                stepLearning = 5;
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>left barrel</color> by moving the controller<color=#ffa500ff> to the left </color></size>";
+                stepLearning = 4;
             }
 
-
-            if (stepLearning == 5 && stop)
+            if (stepLearning == 4 && stop)
             {
-                if (Input.GetAxis("YawDroite_Xbox") != 0 && stop || Input.GetAxis("YawDroite_Xbox") != 0 && stop)
+                if (Input.GetAxis("Roll_manette") <-0.9 && stop)
                 {
-
-                    StartCoroutine(waitBeforeStep(2f));
+                    StartCoroutine(waitBeforeStep(0.5f));
                 }
             }
 
-
-            if (stepLearning == 6 && stop)
+            if (stepLearning == 5 && stop)
             {
                 manette2.SetActive(false);
                 instructionTxt.enabled = false;
             }
 
+            if (stepLearning == 6 && stop)
+            {
+                instructionTxt.enabled = true;
+                instructionTxt.text = "Well Done";
+                StartCoroutine(waitBeforeStep(1f));
+            }
 
             if (stepLearning == 7 && stop)
             {
                 instructionTxt.enabled = true;
-                instructionTxt.text = "Well Done";
-                StartCoroutine(waitBeforeStep(2f));
-            }
+                manette3.SetActive(true);
 
+                joyStickL.GetComponent<Image>().color = apprentissageColor;
+                joyStickR.GetComponent<Image>().color = Color.white;
+
+                joyStickL.transform.GetChild(2).gameObject.SetActive(true);
+                joyStickL.transform.GetChild(3).gameObject.SetActive(true);
+
+                instructionTxt.text = "<size=60>Do a <color=#ffa500ff>loping</color> by moving the controller<color=#ffa500ff> up </color></size>";
+                stepLearning = 8;
+            }
 
             if (stepLearning == 8 && stop)
             {
-                instructionTxt.enabled = true;
-                instructionTxt.text = "Let's practice a little !";
-                StartCoroutine(waitBeforeStep(2f));
+                if (Input.GetAxis("Pitch_manette") < -0.9 && stop)
+                {
+                    StartCoroutine(waitBeforeStep(0.5f));
+                }
             }
-
 
             if (stepLearning == 9 && stop)
             {
-                instructionTxt.enabled = true;
-                instructionTxt.text = "Finish the <color=#ffa500ff>5</color> rings left";
-                StartCoroutine(waitBeforeStep(2f));
+                manette3.SetActive(false);
+                instructionTxt.enabled = false;
             }
-
 
             if (stepLearning == 10 && stop)
             {
-                instructionTxt.enabled = false;
+                instructionTxt.enabled = true;
+                instructionTxt.text = "Level clear";
+                StartCoroutine(waitBeforeStep(2.5f));
             }
-
 
             if (stepLearning == 11 && stop)
             {
-                instructionTxt.enabled = true;
-                instructionTxt.text = "Level clear";
-                StartCoroutine(waitBeforeStep(3f));
-            }
-
-            if (stepLearning == 12 && stop)
-            {
                 instructionTxt.enabled = false;
-                canvas_EndLevel.SetActive(true);
+                Time.timeScale = 0;
+                canvas_EndLevel.SetActive(true);    
             }
-
-
-
-
 
             if (instructionTxt.enabled == false)
             {
-                //Debug.Log("Text et boite de text desactivé");
                 panelInstruction.SetActive(false);
             }
+
             else
             {
                 panelInstruction.SetActive(true);
             }
-
 
             if (numberCheckpoint == numberGateToPass)
             {
                 numberTrigger++;
                 scriptTrigger.getValor(false, numberTrigger, false);
                 numberCheckpoint = 0;
-
             }
+
             if (numberTrigger == 3)
             {
                 numberGateToPass = 4;
             }
         }
 
-
-
         IEnumerator waitBeforeStep(float timer)
         {
-
             stop = false;
             yield return new WaitForSeconds(timer);
             stepLearning += 1;
             stop = true;
         }
-
 
         void OnTriggerEnter(Collider other)
         {
@@ -302,7 +277,6 @@ using UnityEngine.SceneManagement;
 
                 if (!functionArrowAlreadyPlayed)
                 {
-                    scriptLookAtArrow.increaseNumberPointArrow();
                     functionArrowAlreadyPlayed = true;
                 }
             }
@@ -310,19 +284,19 @@ using UnityEngine.SceneManagement;
             if (other.name == "NextSequence01" && numberTrigger != 1)
             {
                 numberCheckpoint = 0;
-                stepLearning = 3;
+                stepLearning = 2;
             }
 
             if (other.name == "NextSequence02" && numberTrigger != 2)
             {
                 numberCheckpoint = 0;
-                stepLearning = 7;
+                stepLearning = 6;
             }
 
             if (other.name == "NextSequence03" && numberTrigger != 3)
             {
                 numberCheckpoint = 0;
-                stepLearning = 11;
+                stepLearning = 10;
             }
 
             if (numberTrigger == 1)
@@ -351,10 +325,7 @@ using UnityEngine.SceneManagement;
                     stepLearning = 9;
                 }
             }
-
-
     }
-
 
         void OnTriggerExit(Collider other)
         {
