@@ -39,6 +39,8 @@ namespace WeLoveAero
         {
             SaveDataBetweenSceneFinished = false;
             //  StaticModeDeJeu = ModeDeJeu;
+        
+
             GiveDataAccecible();
         }
 

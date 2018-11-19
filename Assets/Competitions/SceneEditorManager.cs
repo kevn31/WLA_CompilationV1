@@ -205,7 +205,7 @@ namespace WeLoveAero
         {
           //  saveContentScript.SaveEvent();
 
-            SceneManager.LoadScene("InGameTest");
+            SceneManager.LoadScene("TestEventFlight");
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections;                                                                                                                  
 using System.Collections.Generic;
 using UnityEngine;
 using WeLoveAero;
@@ -9,6 +9,10 @@ namespace WeLoveAero
     {
         ///////////// script////////////
         SaveContentBetweenScenesScript saveContentScript;
+
+        LoopPrefabFigure scriptLoopPrefabFigure;
+
+        CalculScore calculScoreScript;
 
         private GameObject plane;
         private Vector3 planePosition;
@@ -32,7 +36,9 @@ namespace WeLoveAero
         // Use this for initialization
         void Start()
         {
+            calculScoreScript = GameObject.Find("_manager").GetComponent<CalculScore>();
             saveContentScript = GameObject.Find("_manager").GetComponent<SaveContentBetweenScenesScript>();
+            scriptLoopPrefabFigure = GameObject.Find("Xtra_330").GetComponent<LoopPrefabFigure>();
             numberStage = 0;
             numberFigure = 0;
             actualFigure = 0;
@@ -40,56 +46,93 @@ namespace WeLoveAero
             plane = GameObject.FindWithTag("planeGeneratorFigure");
             alreadyPlace = false;
             futureFigure = 0;
-           // scriptArrayFigure = gameObject.GetComponent<FigureChoice>();
+            // scriptArrayFigure = gameObject.GetComponent<FigureChoice>();
 
-            Debug.Log("whé");
 
-           // scriptArrayFigure.setTravelingVariable();
-           // figure = scriptArrayFigure.travelingFigureArray;
+
+            // scriptArrayFigure.setTravelingVariable();
+            // figure = scriptArrayFigure.travelingFigureArray;
             //figure[scriptArrayFigure.travelingLevelFigure, i]
-
+            if (!alreadyPlace)
+            {
+              
+                placePlane();
+            }
+            int v = 0;
+            while (v < 10)
+            {
+              
+                Debug.Log("figureNumberTabSave: " + saveContentScript.figureNumberTabSave[v]);
+                //  saveContentScript.figureNumberTabSave[actualFigure] = saveContentScript.figureNumberTabSave[actualFigure] + 1;
+                v++;
+            }
 
         }
 
         //LoopPrefabFigure()
-        //setScript()
+       // setScript()
         // Update is called once per frame
 
         void Update()
         {
 
-            if (!alreadyPlace)
-            {
-                placePlane();
-            }
+            
 
 
 
         }
 
-        void placePlane()
+        public void placePlane()
         {
-            Debug.Log("PlacePlane");
-            planePosition = plane.transform.position;
-            planeRotation = Quaternion.Euler(new Vector3(0, plane.transform.rotation.eulerAngles.y, 0));
-            Debug.Log(planeRotation);
+           // Debug.Log("figureNumberTabSave: " + saveContentScript.figureNumberTabSave[actualFigure]);
+            if (newFigure != null )
+            {
+                Destroy(newFigure);
+            }
+            else
+            {
+              
+                if (saveContentScript.figureNumberTabSave[actualFigure] != null || saveContentScript.figureNumberTabSave[actualFigure] != 0)
+                {
+                    planePosition = plane.transform.position;
+                    planeRotation = Quaternion.Euler(new Vector3(0, plane.transform.rotation.eulerAngles.y, 0));
+                    // Debug.Log(planeRotation);
 
 
-            //newFigure = Instantiate(prefabFigure[figure[scriptArrayFigure.travelingLevelFigure, futureFigure]], planePosition, planeRotation);
+                    // newFigure = Instantiate(prefabFigure[figure[scriptArrayFigure.travelingLevelFigure, futureFigure]], planePosition, planeRotation);
 
-            // figure = StaticfigureNumberTabSave
-            // scriptArrayFigure.travelingLevelFigure, futureFigure devient le numero actuel de la figure
-            newFigure = Instantiate(prefabFigure[saveContentScript.figureNumberTabSave[actualFigure]], planePosition, planeRotation);
-            alreadyPlace = true;
+                    // figure = StaticfigureNumberTabSave
+                    // scriptArrayFigure.travelingLevelFigure, futureFigure devient le numero actuel de la figure
+                    newFigure = Instantiate(prefabFigure[saveContentScript.figureNumberTabSave[actualFigure]], planePosition, planeRotation);
+                    alreadyPlace = true;
 
-            //Debug.Log(newFigure);
-            LoopPrefabFigure scriptLoopPrefabFigure = plane.GetComponent<LoopPrefabFigure>();    //repere et permet d appeler le script en local
-
-
-            scriptLoopPrefabFigure.setScript();
-            futureFigure++;
+                    //Debug.Log(newFigure);
+                    // scriptLoopPrefabFigure = plane.GetComponent<LoopPrefabFigure>();    //repere et permet d appeler le script en local
 
 
+                    scriptLoopPrefabFigure.setScript();
+                    futureFigure++;
+                    actualFigure++;
+
+                    calculScoreScript.SetCheckPointEnd();
+                    Debug.Log("competion");
+
+                }
+                else
+                {
+                    Debug.Log("fin de la competition");
+                }
+
+            }
+           
+            // Debug.Log("PlacePlane");
+
+
+
+        }
+
+        public void NextFigure()
+        {
 
         }
 
@@ -102,9 +145,11 @@ namespace WeLoveAero
         IEnumerator alreadyPlaceToFalse()
         {
             yield return new WaitForSeconds(0.5f);
-            Debug.Log("placer figure");
-            alreadyPlace = false;
 
+  
+            alreadyPlace = false;
+           // NextFigure();
+            //placePlane();
         }
     }
 }

@@ -2,321 +2,403 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using WeLoveAero;
 
-public class LoopPrefabFigure : MonoBehaviour
+namespace WeLoveAero
 {
-    
-    private GameObject objectOnCollider;
-    public int numberOnLoop;
-    private string numberOnLoopString;
-    private string numberOnLoopStringMoreOne;
-
-    public bool alreadyIncrease;
-
-   // public Text CheckpointSuccess;     //a rajouter
-    public Text scoreTxt;
-
-    public int checkPointPassageSuccess;
-
-    public string figureName;
-
-    public GameObject nextCheckpoint;
-    public GameObject CurrentCheckpoint;
-    public GameObject CurrentFigure;
-
-    private int nbrPerfect;
-    private int nbrGood;
-    private int nbrBad;
-
-   // private CalculScore scriptScore;
-   // private FigureManager managerScript;
-    //private GameObject manager;
-
-
-
-
-    void Start()
-    {
-        numberOnLoop = 1;
-        checkPointPassageSuccess = 0;
-       // CheckpointSuccess.enabled = false;
-
-        alreadyIncrease = false;
-
-        //manager = GameObject.FindWithTag("manager");
-       // managerScript = manager.GetComponent<FigureManager>();
-      
-
-
-
-
-    }
-
-
-    void Update()
+    public class LoopPrefabFigure : MonoBehaviour
     {
 
-    }
+        private GameObject objectOnCollider;
+        public int numberOnLoop;
+        private string numberOnLoopString;
+        private string numberOnLoopStringMoreOne;
 
-    public void setScript()
-    {
-       // Debug.Log("set script");
-        Getcheckpoint(true);
+        public bool alreadyIncrease;
 
-        CurrentFigure = GameObject.FindWithTag("onGoingFigure");
-      //  scriptScore = CurrentFigure.GetComponent<CalculScore>();
-    }
+       // public Text CheckpointSuccess;     //a rajouter
+        public Text scoreTxt;
 
+        public int checkPointPassageSuccess;
 
-    void Getcheckpoint(bool callOnstart)
-    {
+        public string figureName;
 
-        numberOnLoopString = numberOnLoop.ToString();
-        CurrentCheckpoint = GameObject.Find(numberOnLoopString);
-        
+        public GameObject nextCheckpoint;
+        public GameObject CurrentCheckpoint;
+        public GameObject CurrentFigure;
 
-        if (callOnstart)
-        {
-            
-            if (CurrentCheckpoint != null)
-            {
-               /* if (CurrentCheckpoint.transform.root != transform)
-                {
-                    CurrentCheckpoint = CurrentCheckpoint.transform.parent.gameObject;
-                }*/
+        private int nbrPerfect;
+        private int nbrGood;
+        private int nbrBad;
 
-                feedBackCheckPoint sn = CurrentCheckpoint.GetComponent<feedBackCheckPoint>();
-                sn.setActiveArrows();
-                
-            }          
-        }
-
-
-        if (!callOnstart)
-        {
-            //Debug.Log("JE SUIS LA");
-            numberOnLoopStringMoreOne = (numberOnLoop + 1).ToString();
-            nextCheckpoint = GameObject.Find(numberOnLoopStringMoreOne);
-
-            if (nextCheckpoint == null || nextCheckpoint.name == "1")
-            {
-                nextCheckpoint = GameObject.Find("endFigure");
-            }
-
-
-            if (nextCheckpoint.transform.root != transform && nextCheckpoint.transform.parent.name == nextCheckpoint.name)
-            {
-                nextCheckpoint = nextCheckpoint.transform.parent.gameObject;
-            }
-            
-            feedBackCheckPoint snNext = nextCheckpoint.GetComponent<feedBackCheckPoint>();
-            snNext.setActiveArrows();
-
-
-            if (CurrentCheckpoint != null)
-            {
-                feedBackCheckPoint snCurrent = CurrentCheckpoint.GetComponent<feedBackCheckPoint>();
-
-                if (snCurrent != null)
-                {
-                    snCurrent.setUnactiveArrows();
-                }
-            }
-           
-        }
-
-    }
-
-
-    void OnTriggerEnter(Collider other)
-    {
-        Renderer m_Renderer = other.gameObject.GetComponent<Renderer>();
-        numberOnLoopString = numberOnLoop.ToString();
        
+        // private FigureManager managerScript;
+        //private GameObject manager;
+
+        FigureManager managerScript;
+        feedBackCheckPoint feedBackCheckPointScript;
+        CalculScore scriptScore;
+
+        private Vector3 FeedBackCheckPointPosition;
+        private Quaternion FeedBackCheckPointRotation;
+        public int checkPointActual;
+        public int checkPointNext;
+        public int checkPointEnd;     //determine la fin de chaque figure et doit etre asigné a son instantiation
+        public GameObject ActualCheckPointGameObject;
+        public GameObject NextCheckPointGameObject;
+        public GameObject FourArrow;//le feedBack a deplacer 
 
 
-        //Debug.Log(numberOnLoopString);
-        
-        if (m_Renderer != null)
+        void Start()
         {
-            m_Renderer.enabled = false;
-        }
+            scriptScore = GameObject.Find("_manager").GetComponent<CalculScore>();
+            managerScript = GameObject.Find("_manager").GetComponent<FigureManager>();
+            //feedBackCheckPointScript = GameObject.Find("1").GetComponent<feedBackCheckPoint>();
 
-        if (other.gameObject.name == numberOnLoopString)
-        {
-            Getcheckpoint(false);
-
-            if (other.gameObject.tag == "small")
-            {
-                checkPointPassageSuccess = 1;
-            }
-            else if (other.gameObject.tag == "medium")
-            {
-                checkPointPassageSuccess = 2;
-
-            }
-            else if(other.gameObject.tag == "large")
-            {
-                
-                checkPointPassageSuccess = 3;
-            }
-
-        }
-
-        else if (other.gameObject.name == "endFigure")
-        {
-            Getcheckpoint(false);
-
-            if (other.gameObject.tag == "small")
-            {
-                checkPointPassageSuccess = 5;
-            }
-            else if (other.gameObject.tag == "medium")
-            {
-                checkPointPassageSuccess = 6;
-
-            }
-            else if (other.gameObject.tag == "large")
-            {
-                checkPointPassageSuccess = 7;
-            }
-
-            numberOnLoop = 0;
-        }
-
-        else
-        {
-
-            checkPointPassageSuccess = 4;
             
+            checkPointPassageSuccess = 0;
+          //  CheckpointSuccess.enabled = false;
+
+            alreadyIncrease = false;
+            numberOnLoop = 1;
+            //manager = GameObject.FindWithTag("manager");
+            // managerScript = manager.GetComponent<FigureManager>();
+
+
+
+            checkPointActual = 0;
+            checkPointNext = 1;
+
         }
 
-        alreadyIncrease = false;
-    }
 
-    void OnTriggerExit(Collider other)
-    {
-     
-        if (other.gameObject.tag == "large")
+        void Update()
         {
-           // CheckpointSuccess.enabled = true;
+          //  Debug.Log("passage: " + checkPointPassageSuccess);
+         
+        //         Debug.Log("   numberOnLoop: " + numberOnLoop);
+        }
+
+        public void setScript()
+        {
+            Debug.Log("set script");
+            Getcheckpoint(true);
+
+            CurrentFigure = GameObject.FindWithTag("onGoingFigure");
+            //scriptScore = CurrentFigure.GetComponent<CalculScore>();
+        }
 
 
-            if (checkPointPassageSuccess == 1)
+        void Getcheckpoint(bool callOnstart)
+        {
+
+            numberOnLoopString = numberOnLoop.ToString();
+            CurrentCheckpoint = GameObject.Find(numberOnLoopString);
+
+
+            if (callOnstart)
             {
-                //Debug.Log("Perfect !!");
-                nbrPerfect++;
 
-
-
-            }
-
-            else if(checkPointPassageSuccess == 2)
-            {
-                //Debug.Log("Good !");
-                nbrGood++;
-            }
-
-            else if(checkPointPassageSuccess == 3)
-            {
-                //Debug.Log("Bad.");
-                nbrBad++;
-            }
-
-            else if (checkPointPassageSuccess == 4)
-            {
-                //Debug.Log("Miss...");
-               // CheckpointSuccess.enabled = true;
-               // CheckpointSuccess.text = "Miss...";
-
-                //////                  \\\\\\
-                /////                    \\\\\       
-                ////                      \\\\
-                ///                        \\\
-                //                          \\
-
-                while (other.gameObject.name != numberOnLoopString)
+                if (CurrentCheckpoint != null)
                 {
-                   // Debug.Log("nom du checkpoint = " + other.gameObject.name);
-                    numberOnLoop++;
-                    numberOnLoopString = numberOnLoop.ToString();
-                   // Debug.Log("nombre loop = " + numberOnLoop);
-                    return;
+                    if (CurrentCheckpoint.transform.root != transform)
+                    {
+                        CurrentCheckpoint = CurrentCheckpoint.transform.parent.gameObject;
+                    }
+
+                    //feedBackCheckPoint sn = CurrentCheckpoint.GetComponent<feedBackCheckPoint>();
+                   // feedBackCheckPointScript.setActiveArrows();
+
+                }
+            }
+
+
+            if (!callOnstart)
+            {
+                Debug.Log("JE SUIS LA");
+                numberOnLoopStringMoreOne = (numberOnLoop + 1).ToString();
+                nextCheckpoint = GameObject.Find(numberOnLoopStringMoreOne);
+
+                if (nextCheckpoint == null || nextCheckpoint.name == "1")
+                {
+                    nextCheckpoint = GameObject.Find("endFigure");
+                }
+
+
+                if (nextCheckpoint.transform.root != transform && nextCheckpoint.transform.parent.name == nextCheckpoint.name)
+                {
+                    nextCheckpoint = nextCheckpoint.transform.parent.gameObject;
+                }
+
+                // feedBackCheckPoint snNext = nextCheckpoint.GetComponent<feedBackCheckPoint>();
+               // feedBackCheckPointScript.setActiveArrows();
+
+
+                if (CurrentCheckpoint != null)
+                {
+                   // feedBackCheckPoint snCurrent = CurrentCheckpoint.GetComponent<feedBackCheckPoint>();
+
+                   /* if (feedBackCheckPointScript != null)
+                    {
+                        feedBackCheckPointScript.setUnactiveArrows();
+                    }  */
                 }
 
             }
 
-            else if (checkPointPassageSuccess == 5)
-            {
-                nbrPerfect++;
-                Handheld.Vibrate();
+        }
 
-                StartCoroutine(WaitAndDisable());
-                //scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
-               // managerScript.allowToPlace();
-                variableReset();
+
+        void OnTriggerEnter(Collider other)
+        {
+          
+          //  feedBackCheckPointScript = GameObject.Find(checkPointNext.ToString()).GetComponent<feedBackCheckPoint>();
+            // checkPointActual = 
+            Renderer m_Renderer = other.gameObject.GetComponent<Renderer>();
+            numberOnLoopString = numberOnLoop.ToString();
+           // checkPointNext = checkPointNext.ToString();
+            //Debug.Log("coolide");
+
+            Debug.Log(numberOnLoopString);
+
+            if (m_Renderer != null)
+            {
+                m_Renderer.enabled = false;
             }
 
-            else if (checkPointPassageSuccess == 6)
+            //if (other.gameObject.name == numberOnLoopString)
+            if (other.gameObject.name == checkPointNext.ToString())
             {
-                nbrGood++;
-                Handheld.Vibrate();
+                if (other.gameObject.name == "1")
+                {
+                    scriptScore.SetCheckPointEnd();
+                }
+                   
+                    checkPointActual ++;
+                checkPointNext = checkPointActual + 1;
+                VisualCheckPoint();
+                Debug.Log("coolide " + checkPointNext);
+                Getcheckpoint(false);
 
-                StartCoroutine(WaitAndDisable());
-               // scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
-               // managerScript.allowToPlace();
-                variableReset();
-            }
-
-            else if (checkPointPassageSuccess == 7)
-            {
-                nbrBad++;
-                Handheld.Vibrate();
-
-                StartCoroutine(WaitAndDisable());
-             //   scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
-                //managerScript.allowToPlace();
-                variableReset();
-            }
-
-            if (!alreadyIncrease)
-            {
+              
                 numberOnLoop++;
-                alreadyIncrease = true;
+                if (other.gameObject.tag == "small")
+                {
+                    checkPointPassageSuccess = 1;
+                }
+                else if (other.gameObject.tag == "medium")
+                {
+                    checkPointPassageSuccess = 2;
+
+                }
+                else if (other.gameObject.tag == "large")
+                {
+
+                    checkPointPassageSuccess = 3;
+                }
+               
+
             }
 
-            checkPointPassageSuccess = 0;
+            else if (other.gameObject.name == "endFigure")
+            {
+                Getcheckpoint(false);
+                Debug.Log("fin de figure");
+
+                if (other.gameObject.tag == "small")
+                {
+                    checkPointPassageSuccess = 5;
+
+                    managerScript.allowToPlace();
+                    variableReset();
+                }
+                else if (other.gameObject.tag == "medium")
+                {
+                    checkPointPassageSuccess = 6;
+                    managerScript.allowToPlace();
+                    variableReset();
+
+                }
+                else if (other.gameObject.tag == "large")
+                {
+                    checkPointPassageSuccess = 7;
+                    managerScript.allowToPlace();
+                    variableReset();
+                }
+
+                numberOnLoop = 0;
+            }
+
+            else
+            {
+
+                checkPointPassageSuccess = 4;
+
+            }
+
+            alreadyIncrease = false;
+        }
+
+        void OnTriggerExit(Collider other)
+        {
            
 
+            if (other.gameObject.tag == "large")
+            {
+               // CheckpointSuccess.enabled = true;
+
+
+                if (checkPointPassageSuccess == 1)
+                {
+                    Debug.Log("Perfect !!");
+                    nbrPerfect++;
+
+
+
+                }
+
+                else if (checkPointPassageSuccess == 2)
+                {
+                    Debug.Log("Good !");
+                    nbrGood++;
+                }
+
+                else if (checkPointPassageSuccess == 3)
+                {
+                    Debug.Log("Bad.");
+                    nbrBad++;
+                }
+
+                else if (checkPointPassageSuccess == 4)
+                {
+                    Debug.Log("Miss...");
+                   // CheckpointSuccess.enabled = true;
+                   // CheckpointSuccess.text = "Miss...";
+
+                    //////                  \\\\\\
+                    /////                    \\\\\       
+                    ////                      \\\\
+                    ///                        \\\
+                    //                          \\
+
+                    while (other.gameObject.name != numberOnLoopString)
+                    {
+                      //  Debug.Log("nom du checkpoint = " + other.gameObject.name);
+                        numberOnLoop++;
+                        numberOnLoopString = numberOnLoop.ToString();
+                        //Debug.Log("nombre loop = " + numberOnLoop);
+                        return;
+                    }
+
+                }
+
+                else if (checkPointPassageSuccess == 5)
+                {
+                    Debug.Log("passe vers allow place " + checkPointPassageSuccess);
+                    nbrPerfect++;
+                    Handheld.Vibrate();
+
+                    StartCoroutine(WaitAndDisable());
+                    scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
+                    
+                    managerScript.allowToPlace();
+                    variableReset();
+                }
+
+                else if (checkPointPassageSuccess == 6)
+                {
+                    Debug.Log("passe vers allow place " + checkPointPassageSuccess);
+                    nbrGood++;
+                    Handheld.Vibrate();
+
+                    StartCoroutine(WaitAndDisable());
+                    scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
+                   
+                    managerScript.allowToPlace();
+                    variableReset();
+                }
+
+                else if (checkPointPassageSuccess == 7)
+                {
+                    Debug.Log("passe vers allow place " + checkPointPassageSuccess);
+                    nbrBad++;
+                    Handheld.Vibrate();
+
+                    StartCoroutine(WaitAndDisable());
+                    scriptScore.scoreTotalFigure(nbrPerfect, nbrGood, nbrBad);
+                   
+                    managerScript.allowToPlace();
+                    variableReset();
+                }
+
+                if (!alreadyIncrease)
+                {
+                    numberOnLoop++;
+                    alreadyIncrease = true;
+                }
+
+                checkPointPassageSuccess = 0;
+
+
+
+            }
+
+            else if (other.gameObject.tag == "limiteFigure")
+            {
+                Handheld.Vibrate();
+
+                StartCoroutine(WaitAndDisable());
+                // scriptScore.scoreTotalFigure(0, 0, 0);
+                // managerScript.allowToPlace();
+                variableReset();
+            }
+
+
 
         }
 
-        else if (other.gameObject.tag == "limiteFigure")
+
+        public IEnumerator WaitAndDisable()
         {
-            Handheld.Vibrate();
+            yield return new WaitForSeconds(3);
+           // CheckpointSuccess.enabled = false;
 
-            StartCoroutine(WaitAndDisable());
-           // scriptScore.scoreTotalFigure(0, 0, 0);
-           // managerScript.allowToPlace();
-            variableReset();
         }
-        
+         
+        private void variableReset()
+        {
+            nbrPerfect = 0;
+            nbrGood = 0;
+            nbrBad = 0;
+        }
 
-                                                                                                      
-    }
+        public void VisualCheckPoint()
+        {
+            FourArrow = GameObject.Find("FourArrow");
+            if (checkPointActual != checkPointEnd )
+            { 
+            Debug.Log(" checkPointActuel" + checkPointActual);
+             ActualCheckPointGameObject = GameObject.Find(checkPointActual.ToString());
+           // ActualCheckPointGameObject = GameObject.Find("2");
+            //NextCheckPointGameObject = GameObject.Find("3");
+             NextCheckPointGameObject = GameObject.Find(checkPointNext.ToString());
+            // FeedBackCheckPointPosition = plane.transform.position;
+            // FeedBackCheckPointRotation = Quaternion.Euler(new Vector3(0, plane.transform.rotation.eulerAngles.y, 0));
+            FeedBackCheckPointPosition = NextCheckPointGameObject.transform.position;
+            FeedBackCheckPointRotation = Quaternion.Euler(new Vector3(0, NextCheckPointGameObject.transform.rotation.eulerAngles.y, 0));
 
-
-    public IEnumerator WaitAndDisable()
-    {
-        yield return new WaitForSeconds(3);
-       // CheckpointSuccess.enabled = false;
-
-    }
-
-    private void variableReset()
-    {
-        nbrPerfect = 0;
-        nbrGood = 0;
-        nbrBad = 0;
+            FourArrow.transform.position = FeedBackCheckPointPosition;
+            FourArrow.transform.rotation = FeedBackCheckPointRotation;
+                // ActualCheckPointGameObject.SetActive(false);
+                // NextCheckPointGameObject.SetActive(true);                                                         s
+            }
+            else
+            {
+                Debug.Log(" fin");
+                checkPointActual = 0;
+                checkPointNext = 1;//la figure suivante doit etre instantiate voir peut etre un peu avant
+                managerScript.placePlane();
+            }
+        }
     }
 }
