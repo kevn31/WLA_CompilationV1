@@ -50,6 +50,7 @@ namespace FakePhysics
         void Start()
         {
             f_rollTurn = 0.75f;
+            f_stickyThrottle = 0.8f;
         }
 
         // Update is called once per frame
@@ -72,9 +73,9 @@ namespace FakePhysics
         {
             f_stickyThrottle = f_stickyThrottle + (-f_throttle * f_throttleSpeed * Time.deltaTime);
 
-            f_stickyThrottle = ValeurSlider.value;
+            //f_stickyThrottle = ValeurSlider.value;
 
-            //ValeurSlider.value = f_stickyThrottle;
+            ValeurSlider.value = f_stickyThrottle;
         }
 
         protected virtual void HandleInput()
@@ -108,6 +109,18 @@ namespace FakePhysics
                     f_roll = -accerlerationX * reactivity_Roll;
                     //Debug.Log(f_roll);
                 }
+
+                if (Input.GetAxis("Roll_manette") < -0.05)
+                {
+                    f_rollTurn = Input.GetAxis("Roll_manette");
+                    setRollTurn();
+                }
+                else if (Input.GetAxis("Roll_manette") > 0.05)
+                {
+                    f_rollTurn = Input.GetAxis("Roll_manette");
+                    setRollTurn();
+                }
+                
             }
 
            
@@ -247,30 +260,60 @@ namespace FakePhysics
 
         protected void setRollTurn()
         {
+
+
             pastRotationForTheRoll = transform.eulerAngles;
 
-            //Debug.Log(pastRotationRollZ);
-            if (f_rollTurn != 0)
+            if (Input.GetAxis("Roll_manette") > 0)
+            {/*
+                if (pastRotationRollZ > 315 || pastRotationRollZ < 180)
                 {
-                    if (pastRotationRollZ > 315 || pastRotationRollZ < 180)
-                    {
-                        pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
-                        pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * reactivity);
-                    }
+                    reactivityNow = 50;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                }
+                else if (pastRotationRollZ > 300 || pastRotationRollZ < 180)
+                {
+                    reactivityNow--;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
+                }*/
+
+                if (pastRotationRollZ > 315 || pastRotationRollZ < 180)
+                {
+                    reactivityNow = 50;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
+                }
+                else
+                {
+                    reactivityNow = 50;
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
                 }
 
-                if(f_rollTurn != 0)
-                {
-                    if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
-                    {
-                        pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
-                        pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * reactivity);
-                    
-                    }
-                }
-                
-            pastRotationRollY = pastRotationForTheRoll.y + ((f_roll * Time.deltaTime) * reactivity);
 
+
+                }
+            else
+            {
+                /*
+                if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
+                {
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((f_rollTurn * Time.deltaTime) * 50);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((-f_rollTurn * Time.deltaTime) * 100);
+                }*/
+
+                if (pastRotationRollZ < 45 || pastRotationRollZ > 180)
+                {
+                    reactivityNow = 50;
+                    pastRotationRollZ = pastRotationForTheRoll.z + ((-f_rollTurn * Time.deltaTime) * reactivityNow);
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
+                }
+                else
+                {
+                    reactivityNow = 50;
+                    pastRotationRollY = pastRotationForTheRoll.y + ((f_rollTurn * Time.deltaTime) * 50);
+                }
+            }
 
             transform.rotation = Quaternion.Euler(pastRotationForTheRoll.x, pastRotationRollY, pastRotationRollZ);
         }
