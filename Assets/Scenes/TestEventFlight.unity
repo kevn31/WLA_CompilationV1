@@ -2860,6 +2860,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 0}
+  mainProp: {fileID: 0}
+  blurredProp: {fileID: 0}
+  blurredProp1: {fileID: 0}
 --- !u!1 &548388759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,7 +3369,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 614700408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dfdd41c584a0447409bfd483389bcdc0, type: 3}
   m_Name: 
@@ -3376,6 +3380,9 @@ MonoBehaviour:
   f_xSpeed: 0
   f_maxSpeed: 200
   reactivity: 20
+  f_pitch: 0
+  f_roll: 0
+  f_yaw: 0
   f_throttleSpeed: 1
   f_pitchSpeed: 2
   f_speed: 0
@@ -3526,7 +3533,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 614700408}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d21c33d9f675bca47b6e20edeb2c6698, type: 3}
   m_Name: 
@@ -3536,7 +3543,7 @@ MonoBehaviour:
   f_StickyThrottleValor: 0
   f_xSpeed: 0
   f_maxSpeed: 200
-  reactivity: 0
+  reactivity: 20
   f_throttleSpeed: 1
   f_pitchSpeed: 2
   f_speed: 0
@@ -4230,11 +4237,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 660611072}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 0}
+  mainProp: {fileID: 0}
+  blurredProp: {fileID: 0}
+  blurredProp1: {fileID: 0}
 --- !u!1 &704911838
 GameObject:
   m_ObjectHideFlags: 0
@@ -6516,7 +6527,6 @@ MonoBehaviour:
   - {fileID: 1543136757}
   - {fileID: 1666178316}
   numberPointArrow: 0
-  numberGate: 0
 --- !u!1 &983475103
 GameObject:
   m_ObjectHideFlags: 0
@@ -7733,6 +7743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 0}
+  mainProp: {fileID: 0}
+  blurredProp: {fileID: 0}
+  blurredProp1: {fileID: 0}
 --- !u!1 &1109802305
 GameObject:
   m_ObjectHideFlags: 0
@@ -8207,7 +8221,6 @@ MonoBehaviour:
   - {fileID: 1543136757}
   - {fileID: 1666178316}
   numberPointArrow: 0
-  numberGate: 0
 --- !u!95 &1200527514
 Animator:
   serializedVersion: 3
@@ -11924,6 +11937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3fbeb622f284440ac08b26e71dab06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VitesseRotation: {fileID: 0}
+  mainProp: {fileID: 0}
+  blurredProp: {fileID: 0}
+  blurredProp1: {fileID: 0}
 --- !u!23 &1866537284
 MeshRenderer:
   m_ObjectHideFlags: 0
